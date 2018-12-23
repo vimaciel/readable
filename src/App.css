@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Cinzel');
+
+html,
+body {
+  background-color: #F9FAFC;
+  height: 100%;
+  font-family: 'Nunito', sans-serif;
+}
+
+.card {
+  border: 1px solid #fcfcfc;  
+  border-radius: 10px;
+  margin: 10px;
+  background-color: #FFFFFF;
+  height: 100%;
+}
+
+.card .title {
+  font-size: 1.2em;
+  text-align: center;
+  margin: 0;
+}
+
+.card .author {
+  font-size: 1.1em;
+  color: #a5a5a5;
+  text-align: center;
+}
+
+.card .datetime {
+  color: #a5a5a5;
+  font-size: 0.8em;
+}
+
+.card .body {
+  word-break: normal;
+  margin-top: 10px;
+  text-align: center;
+}
+
+
+.card header {
+  padding: 10px;
+}
+
+.card footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.flex-column-items-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.slick-list {
+  display: flex;
+  flex-direction: row;
+}
+
+.slick-track {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.slick-slide {
+  display: flex !important;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.slick-slide > div {
+  height: 95%;
+}
+
+.clickble-area :hover {
+  cursor: pointer;
+}
+
+.posts-filter-container {
+  padding: 10px;
+  margin-top: 30px;
+}
+
+.posts-slider{
+  margin-top: 20px;
+}
+
+.brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5em;
+}
+
+@media screen and (min-width: 1088px) {
+  a.navbar-item.is-active {
+    color: #3273dc;
+    background-color: #fafafa !important;
+  }
+}
+
+.content-container{
+  border: 1px solid #dbdbdb;
+  margin-top: 15px;
+  padding: 15px;
+  background-color: white;
+  border-radius: 5px;
+
+  -webkit-box-shadow: 13px 13px 8px -7px rgba(0,0,0,0.11);
+  -moz-box-shadow: 13px 13px 8px -7px rgba(0,0,0,0.11);
+  box-shadow: 13px 13px 8px -7px rgba(0,0,0,0.11);
+}
