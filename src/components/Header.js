@@ -7,8 +7,25 @@ import { handleSetAuthor } from '../actions/author'
 class Header extends Component {
     state = {
         mobileMenuOpen: false,
-        modalUserNameOpen: false
+        modalUserNameOpen: false,
+        location: this.props.location
     }
+
+    // componentDidUpdate(prevProps) {
+    //     if (prevProps.location !== this.props.location) {
+    //         const { pathname } = this.props.location;
+    //         [...document.getElementById('menu').querySelectorAll('.navbar-item')].forEach(e => {
+    //             if (pathname === e.pathname) {
+    //                 e.classList.add('is-active')
+    //             }
+    //         })
+
+    //         this.setState({
+    //             location: this.props.location
+    //         })
+    //     }       
+
+    // }
 
     componentDidMount() {
         const { pathname } = this.props.location;

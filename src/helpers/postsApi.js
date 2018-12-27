@@ -4,7 +4,7 @@ import * as uuid from 'uuid'
 export const newPost = (post) => {
     post.timestamp = Date.now()    
     post.id = uuid.v1()
-    return service.post('posts', post);
+    service.post('posts', post);
 }
 
 export const postsByCategory = (category) => {

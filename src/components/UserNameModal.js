@@ -34,7 +34,17 @@ class UserNameModal extends Component {
 
     onSubmit = (e) => {
         e.preventDefault()
-        this.props.dispatch(handleSetAuthor(this.state.username))
+
+        const { username } = this.state
+
+        this.props.dispatch(handleSetAuthor(username))
+
+        if (this.props.onSubmitModal !== undefined) {
+            this.props.onSubmitModal(e, username)
+            return
+        }
+
+
         this.props.onCloseModal(e)
     }
 
