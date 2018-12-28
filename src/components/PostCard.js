@@ -1,35 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { formatTimeStamp, getPostCategoryHeader } from '../helpers/common'
+import { getPostCategoryHeader } from '../helpers/common'
+import DateTimeTag from './DateTimeTag'
 
 class PostCard extends Component {
     render() {
-        const post = this.props.post
-        const { title, body, author, timestamp, category } = post
+        const { id, title, body, author, timestamp, category } = this.props.post
 
         return (
-            <div className="card">
-                <header>
-                    <nav className="level">
-                        {getPostCategoryHeader(category)}
-                        <div className="level-right">
-                            <div className="level-item">
-                                <p className="datetime">{formatTimeStamp(timestamp)}</p>
+            <a href={`/post/${id}/detail`}>
+                <div className="hover-card card">
+                    <header>
+                        <nav className="level">
+                            {getPostCategoryHeader(category)}
+                            <div className="level-right">
+                                <div className="level-item">
+                                    <DateTimeTag dateTime={timestamp}/>
+                                </div>
                             </div>
-                        </div>
-                    </nav>
-                </header>
+                        </nav>
+                    </header>
 
-                <div className="card-content">
-                    <p className="title">{title}</p>
-                    <p className="author">{author}</p>
-                    <p className="body">"{body}"</p>
+                    <div className="card-content">
+                        <p className="title">{title}</p>
+                        <p className="author">{author}</p>
+                        <p className="body">"{body}"</p>
+                    </div>
                 </div>
-
-                <footer>
-                    <a className="button is-white" href="https://twitter.com/codinghorror/status/506010907021828096">+ detail</a>
-                </footer>
-            </div>
+            </a>
         )
     }
 }

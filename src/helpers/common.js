@@ -20,14 +20,17 @@ export const formatTimeStamp = (timestamp) => {
     const hour = dataAdjustment(date.getUTCHours())
     const minutes = dataAdjustment(date.getMinutes())
 
-    return `${month}/${day}/${year} ${hour}:${minutes}`
+    return {
+        date: `${month}/${day}/${year}`,
+        time: `${hour}:${minutes}`
+    }
 }
 
 export const capitalizeFirstLetter = (word) => {
     return word.charAt(0).toUpperCase() + word.slice(1)
 }
 
-export const getPostCategoryHeader = (category) => {
+export const getPostCategoryHeader = (category = 'react') => {
     const categoryInfo = {
         icon: '',
         alt: '',
