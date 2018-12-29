@@ -8,7 +8,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import '../App.css'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/share'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Header from './Header'
 import PostDetail from './PostDetail'
 
@@ -23,10 +23,12 @@ class App extends Component {
         <Fragment>
           <Header />
           <div className="container">
-            <Route path="/" exact component={Home} />
-            <Route path="/post/new" exact component={PostForm} />
-            <Route path="/post/:id/edit" exact component={PostForm} />
-            <Route path="/post/:id/detail" exact component={PostDetail} />
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/post/new" exact component={PostForm} />
+              <Route path="/post/:id/edit" exact component={PostForm} />
+              <Route path="/post/:id/detail" exact component={PostDetail} />
+            </Switch>
           </div>
         </Fragment>
       </Router>

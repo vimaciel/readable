@@ -21,7 +21,7 @@ class PostCard extends Component {
         const { id, title, body, author, timestamp, category } = this.props.post
 
         if (this.state.redirect) {
-            return <Redirect to={`/post/${id}/detail`} />
+            return <Redirect push to={`/post/${id}/detail`} />
         }
 
         return (

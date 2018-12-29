@@ -2,10 +2,10 @@ import React, { Component, Fragment } from 'react'
 import { handlePostDetailInitialData } from "../actions/share"
 import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
 import { connect } from 'react-redux'
-import { handleVotingPost } from "../actions/posts"
 import Commentary from "./Commentary"
 import UserNameModal from './UserNameModal'
 import Post from './Post'
+import { isObjectEmpty } from '../helpers/common'
 
 
 class PostDetail extends Component {
@@ -42,9 +42,7 @@ class PostDetail extends Component {
         }
     }
 
-    onPostVoting = (vote) => {
-        this.props.dispatch(handleVotingPost(this.state.post.id, vote))
-    }
+
 
     onCommentaryVoting = (id, vote) => {
         this.props.dispatch(handleVotingCommentary(id, vote))
@@ -110,7 +108,7 @@ class PostDetail extends Component {
     render() {
         const { post, commentary, comments } = this.state
 
-        const detailPostClass = `column ${!Object.keys(comments).length ? 'is-full' : 'is-three-fifths'}`
+        const detailPostClass = `column ${!isObjectEmpty(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (
             <Fragment>
                 <div className="columns">
