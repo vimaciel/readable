@@ -161,3 +161,7 @@ body {
   -moz-box-shadow: 13px 13px 8px -7px rgba(0,0,0,0.11);
   box-shadow: 13px 13px 8px -7px rgba(0,0,0,0.11);
 }
+
+.commentary-counter{
+  margin-top: 10px;
+}

@@ -1,41 +1,38 @@
 import React, { Component } from 'react'
 import Vote from './Vote'
+import DateTimeTag from './DateTimeTag'
 
 class Commentary extends Component {
+    onVoting = (vote) => {
+        this.props.onCommentaryVoting(this.props.commentary.id, vote)
+    }  
+
     render() {
+        const { author, body, timestamp, voteScore } = this.props.commentary
         return (
             <div className="commentary-container content hover-card">
-
                 <div className="columns">
                     <div className="column is-10">
                         <blockquote>
-                            This is just a simple commentary
+                            {body}
                         </blockquote>
                         <nav className="level">
                             <div className="level-left">
                                 <div className="level-item">
-
-                                </div>
-                                <div className="level-item">
-                                    <strong><i>vimaciel</i></strong>
+                                    <strong><i>{author}</i></strong>
                                 </div>
                             </div>
                             <div className="level-right">
                                 <div className="level-item">
-                                    <div className="tags has-addons">
-                                        <span className="tag">07/14/2016</span>
-                                        <span className="tag is-info">07:02</span>
-                                    </div>
+                                    <DateTimeTag dateTime={timestamp} />
                                 </div>
                             </div>
                         </nav>
                     </div>
                     <div className="column">
-                        <Vote voteScore={0} isCommentaryVote={true}/>
+                        <Vote voteScore={voteScore} isCommentaryVote={true} onVoting={this.onVoting} />
                     </div>
-
                 </div>
-
             </div>
         );
     }

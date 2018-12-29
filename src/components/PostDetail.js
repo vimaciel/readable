@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
-import Commentary from "./Commentary"
 import { handlePostDetailInitialData } from "../actions/share"
-import { handleSaveCommentary } from "../actions/comments"
-import { connect } from 'react-redux'
+import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
 import { getPostCategoryHeader } from '../helpers/common'
-import Vote from './Vote'
+import { connect } from 'react-redux'
 import { handleVotingPost } from "../actions/posts"
+import Commentary from "./Commentary"
+import Vote from './Vote'
 import DateTimeTag from './DateTimeTag'
 
 
@@ -46,6 +46,10 @@ class PostDetail extends Component {
         this.props.dispatch(handleVotingPost(this.state.post.id, vote))
     }
 
+    onCommentaryVoting = (id, vote) => {
+        this.props.dispatch(handleVotingCommentary(id, vote))
+    }
+
     onCommentaryChange = (e) => {
         this.setState({
             commentary: e.target.value
@@ -74,16 +78,21 @@ class PostDetail extends Component {
             }
 
             this.props.dispatch(handleSaveCommentary(newCommentary))
+            this.setState({
+                commentary: ''
+            })
         }
     }
 
     render() {
         const { title, author, body, category, timestamp, voteScore } = this.state.post
-        const { commentary } = this.state
+        const { commentary, comments } = this.state
+
+        const detailPostClass = `column ${!Object.keys(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (
             <div className="columns">
-                <div className="column is-three-fifths">
-                    <div className="content-container">
+                <div className={detailPostClass}>
+                    <div className="content-container hover-card">
                         <nav className="level">
                             {getPostCategoryHeader(category)}
                             <div className="level-right">
@@ -106,7 +115,7 @@ class PostDetail extends Component {
                     <div className="commentary-field">
                         <div className="field has-addons">
                             <div className="control is-expanded">
-                                <input className="input is-large" onKeyPress={this.onConfirmCommentary} value={commentary} onChange={this.onCommentaryChange} type="text" placeholder="Coment something..."></input>
+                                <input maxLength="100" className="input is-large" onKeyPress={this.onConfirmCommentary} value={commentary} onChange={this.onCommentaryChange} type="text" placeholder="Coment something..."></input>
                             </div>
                             <div className="control">
                                 <a href="/" onClick={this.onSubmitCommentary} className="button is-info is-large" disabled={commentary === ''}>
@@ -115,9 +124,19 @@ class PostDetail extends Component {
                             </div>
                         </div>
                     </div>
+                    {commentary.length > 0 && (
+                        <div class="control commentary-counter">
+                            <div class="tags has-addons">
+                                <span class="tag is-dark">{commentary.length}</span>
+                                <span class="tag is-info">100</span>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <div className="column">
-                    <Commentary />
+                    {Object.keys(comments).map(key => (
+                        <Commentary key={key} commentary={comments[key]} onCommentaryVoting={this.onCommentaryVoting} />
+                    ))}
                 </div>
             </div>
         );

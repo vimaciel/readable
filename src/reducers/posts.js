@@ -16,7 +16,7 @@ export default function Posts(state = {}, action) {
             return {
                 ...state,
                 [action.post.id]: action.post
-            }      
+            }
         default:
             return state
     }

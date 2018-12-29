@@ -7,3 +7,11 @@ export const newCommentary = (commentary) => {
 
     return service.post('comments', commentary);
 }
+
+export const votingCommentary = (id, vote) => {
+    const body = {
+        option: vote
+    }
+
+    return service.post(`comments/${id}`, body)
+}
