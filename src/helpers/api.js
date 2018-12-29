@@ -11,6 +11,16 @@ const headers = {
     'Content-Type': 'application/json'
 }
 
+export const getInicialData = (id) => {
+    return Promise.all([
+        get('posts'),
+        get('categories')
+    ]).then(([posts, categories]) => ({
+        posts,
+        categories
+    }))
+}
+
 export const get = (resource) => {
     return callServer(resource, 'GET');
 }

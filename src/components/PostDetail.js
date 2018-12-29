@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from 'react'
-import { handlePostDetailInitialData } from "../actions/share"
 import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
 import { connect } from 'react-redux'
 import Commentary from "./Commentary"
@@ -10,25 +9,13 @@ import { isObjectEmpty } from '../helpers/common'
 
 class PostDetail extends Component {
     state = {
-        post: {},
         commentary: '',
         username: '',
         comments: {},
         openModalUserName: false
     }
 
-    componentDidMount() {
-        const { id } = this.props.match.params
-        this.props.dispatch(handlePostDetailInitialData(id))
-    }
-
     componentWillUpdate(prevProps) {
-        if (prevProps.post !== this.state.post) {
-            this.setState({
-                post: prevProps.post
-            })
-        }
-
         if (prevProps.username !== this.state.username) {
             this.setState({
                 username: prevProps.username
@@ -41,8 +28,6 @@ class PostDetail extends Component {
             })
         }
     }
-
-
 
     onCommentaryVoting = (id, vote) => {
         this.props.dispatch(handleVotingCommentary(id, vote))
@@ -106,14 +91,15 @@ class PostDetail extends Component {
     }
 
     render() {
-        const { post, commentary, comments } = this.state
+        const { commentary, comments } = this.state
+        const { postId } = this.props
 
         const detailPostClass = `column ${!isObjectEmpty(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (
             <Fragment>
                 <div className="columns">
                     <div className={detailPostClass}>
-                        <Post post={post} />
+                        <Post id={postId} />
                         <div className="commentary-field">
                             <div className="field has-addons">
                                 <div className="control is-expanded">
@@ -149,8 +135,9 @@ class PostDetail extends Component {
 
 function mapStateToProps({ posts, author, comments }, props) {
     const { id } = props.match.params
+
     return {
-        post: posts[id],
+        postId: Object.keys(posts).find(key => posts[key].id === id),
         username: author.username,
         comments
     }

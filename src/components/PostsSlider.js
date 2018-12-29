@@ -2,15 +2,9 @@ import React, { Component } from "react"
 import Slider from "react-slick"
 import NewPostCard from './NewPostCard'
 import PostCard from './PostCard';
-import { handleGetAllPosts } from "../actions/posts";
 import { connect } from 'react-redux'
 
-class PostsSlider extends Component {
-    componentDidMount() {
-        this.props.dispatch(handleGetAllPosts())
-        console.log('componentDidMount')
-    }
-
+class PostsSlider extends Component {   
     render() {
         const settings = {
             dots: true,

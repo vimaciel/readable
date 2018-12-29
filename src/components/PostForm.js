@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleGetPost, handleDeletePost } from '../actions/posts'
+import { handleDeletePost } from '../actions/posts'
 import { Categories } from '../helpers/categoriesApi'
 import DateTimeTag from './DateTimeTag'
 import CategorySelection from './CategorySelection'
@@ -23,33 +23,6 @@ class PostForm extends Component {
         body: {
             value: '',
             valid: true
-        },
-        post: {}
-    }
-
-    componentWillUpdate(prevState) {
-        if (prevState.post !== null && prevState.post !== this.state.post) {
-            const { post } = prevState
-
-            this.setState({
-                categorySelected: post.category,
-                title: {
-                    ...this.state.title,
-                    value: post.title
-                },
-                body: {
-                    ...this.state.body,
-                    value: post.body
-                },
-                post
-            })
-        }
-    }
-
-    componentDidMount() {
-        const { id } = this.props.match.params
-        if (id) {
-            this.props.dispatch(handleGetPost(id))
         }
     }
 
@@ -151,16 +124,19 @@ class PostForm extends Component {
     }
 
     onDeletePost = () => {
-        this.props.dispatch(handleDeletePost(this.state.post.id))
+        this.props.dispatch(handleDeletePost(this.props.post.id))
+        this.props.history.push('/')
+    }
 
-        this.setState({
-            redirect: true,
-            redirectTo: '/'
-        })
+    componentWillMount() {
+        console.log(this.props.posts)
     }
 
     render() {
-        const { title, body, redirect, redirectTo, post } = this.state
+        const { title, body, redirect, redirectTo } = this.state
+        const { post } = this.props     
+        const isEdit = !isObjectEmpty(post)
+        
 
         if (redirect) {
             return <Redirect to={redirectTo} />
@@ -169,7 +145,7 @@ class PostForm extends Component {
         return (
             <div className="content-container">
 
-                {!isObjectEmpty(post) && (
+                {isEdit && (
                     <nav className="level">
                         {getPostCategoryHeader(post.category)}
                         <div className="level-right">
@@ -200,11 +176,12 @@ class PostForm extends Component {
 
                     <nav className="level is-mobile">
                         <div className="level-left">
-                            {isObjectEmpty(post) ? (
+                            {isEdit ? (
+                                <Delete onYesClick={this.onDeletePost} />
+                            ):                           
+                            (
                                 <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
-                            ) : (
-                                    <Delete onYesClick={this.onDeletePost} />
-                                )}
+                            )}
                         </div>
 
                         <div className="level-right">
@@ -226,10 +203,11 @@ class PostForm extends Component {
 function mapStateToProps({ author, posts }, props) {
     const username = author.username !== undefined ? author.username : ''
     const { id } = props.match.params
-
+    const key = Object.keys(posts).filter(key => posts[key].id === id)
+    const post = posts[key]
     return {
         username,
-        post: id ? posts[id] : null
+        post: post ? post : {}
     }
 }
 

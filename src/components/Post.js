@@ -9,16 +9,7 @@ import Vote from './Vote'
 
 class Post extends Component {
     state = {
-        post: {},
         redirect: false
-    }
-
-    componentWillUpdate(prevProps) {
-        if (prevProps.post !== this.state.post) {
-            this.setState({
-                post: prevProps.post
-            })
-        }
     }
 
     onPostVoting = (vote) => {
@@ -32,6 +23,13 @@ class Post extends Component {
     }
 
     render() {
+
+        if (this.props.post === null) {
+            return <div className="content-container">
+                <b>The post doesn't exist</b>
+            </div>
+        }
+
         const { id, title, author, body, category, timestamp, voteScore } = this.props.post
 
         if (this.state.redirect) {
@@ -63,9 +61,10 @@ class Post extends Component {
     }
 }
 
-function mapStateToProps({ _ }, { post }) {
+function mapStateToProps({ posts }, { id }) {
+    const post = posts[id]
     return {
-        post
+        post: post ? post : null
     }
 }
 
