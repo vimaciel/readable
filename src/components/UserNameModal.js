@@ -4,12 +4,17 @@ import { handleSetAuthor } from '../actions/author'
 
 class UserNameModal extends Component {
     state = {
-        username: this.props.username || ''
+        username: this.props.username || '',
+        openModal: false
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.openModal !== this.props.openModal) {
             document.getElementById('inputUserName').focus()
+
+            this.setState({
+                openModal: this.props.openModal
+            })
         }
 
         if (prevProps.username !== this.props.username) {

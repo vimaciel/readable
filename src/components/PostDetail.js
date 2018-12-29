@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import { handlePostDetailInitialData } from "../actions/share"
 import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
 import { getPostCategoryHeader } from '../helpers/common'
@@ -7,6 +7,7 @@ import { handleVotingPost } from "../actions/posts"
 import Commentary from "./Commentary"
 import Vote from './Vote'
 import DateTimeTag from './DateTimeTag'
+import UserNameModal from './UserNameModal'
 
 
 class PostDetail extends Component {
@@ -14,7 +15,8 @@ class PostDetail extends Component {
         post: {},
         commentary: '',
         username: '',
-        comments: {}
+        comments: {},
+        openModalUserName: false
     }
 
     componentDidMount() {
@@ -58,17 +60,28 @@ class PostDetail extends Component {
 
     onConfirmCommentary = (e) => {
         if (e.key === 'Enter') {
-            this.saveCommentary()
+            this.onSubmitCommentary(e)
         }
     }
 
     onSubmitCommentary = (e) => {
         e.preventDefault()
-        this.saveCommentary()
+
+        const { username } = this.state
+
+        if (username === '') {
+            this.setState({
+                openModalUserName: true
+            })
+
+            return
+        }
+
+        this.saveCommentary(username)
     }
 
-    saveCommentary = () => {
-        const { commentary, post, username } = this.state
+    saveCommentary = (username) => {
+        const { commentary, post } = this.state
 
         if (commentary !== '') {
             const newCommentary = {
@@ -84,61 +97,76 @@ class PostDetail extends Component {
         }
     }
 
+    onCloseModal = (e) => {
+        e.preventDefault()
+        this.setState({
+            openModalUserName: false
+        })
+    }
+
+    onSubmitModal = (e, username) => {
+        this.saveCommentary(username)
+        this.onCloseModal(e)
+    }
+
     render() {
         const { title, author, body, category, timestamp, voteScore } = this.state.post
         const { commentary, comments } = this.state
 
         const detailPostClass = `column ${!Object.keys(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (
-            <div className="columns">
-                <div className={detailPostClass}>
-                    <div className="content-container hover-card">
-                        <nav className="level">
-                            {getPostCategoryHeader(category)}
-                            <div className="level-right">
-                                <div className="level-item">
-                                    <DateTimeTag dateTime={timestamp} />
+            <Fragment>
+                <div className="columns">
+                    <div className={detailPostClass}>
+                        <div className="content-container hover-card">
+                            <nav className="level">
+                                {getPostCategoryHeader(category)}
+                                <div className="level-right">
+                                    <div className="level-item">
+                                        <DateTimeTag dateTime={timestamp} />
+                                    </div>
+                                </div>
+                            </nav>
+                            <div className="columns is-mobile is-gapless">
+                                <div className="column is-10">
+                                    <p className="title is-4">{title}</p>
+                                    <p className="subtitle">{author}</p>
+                                    <p className="body">{body}</p>
+                                </div>
+                                <div className="column is-2">
+                                    <Vote voteScore={voteScore} onVoting={this.onPostVoting} />
                                 </div>
                             </div>
-                        </nav>
-                        <div className="columns is-mobile is-gapless">
-                            <div className="column is-10">
-                                <p className="title is-4">{title}</p>
-                                <p className="subtitle">{author}</p>
-                                <p className="body">{body}</p>
-                            </div>
-                            <div className="column is-2">
-                                <Vote voteScore={voteScore} onVoting={this.onPostVoting} />
+                        </div>
+                        <div className="commentary-field">
+                            <div className="field has-addons">
+                                <div className="control is-expanded">
+                                    <input maxLength="100" className="input is-large" onKeyPress={this.onConfirmCommentary} value={commentary} onChange={this.onCommentaryChange} type="text" placeholder="Coment something..."></input>
+                                </div>
+                                <div className="control">
+                                    <a href="/" onClick={this.onSubmitCommentary} className="button is-info is-large" disabled={commentary === ''}>
+                                        Post
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        {commentary.length > 0 && (
+                            <div className="control commentary-counter">
+                                <div className="tags has-addons">
+                                    <span className="tag is-dark">{commentary.length}</span>
+                                    <span className="tag is-info">100</span>
+                                </div>
+                            </div>
+                        )}
                     </div>
-                    <div className="commentary-field">
-                        <div className="field has-addons">
-                            <div className="control is-expanded">
-                                <input maxLength="100" className="input is-large" onKeyPress={this.onConfirmCommentary} value={commentary} onChange={this.onCommentaryChange} type="text" placeholder="Coment something..."></input>
-                            </div>
-                            <div className="control">
-                                <a href="/" onClick={this.onSubmitCommentary} className="button is-info is-large" disabled={commentary === ''}>
-                                    Post
-                                </a>
-                            </div>
-                        </div>
+                    <div className="column">
+                        {Object.keys(comments).map(key => (
+                            <Commentary key={key} commentary={comments[key]} onCommentaryVoting={this.onCommentaryVoting} />
+                        ))}
                     </div>
-                    {commentary.length > 0 && (
-                        <div class="control commentary-counter">
-                            <div class="tags has-addons">
-                                <span class="tag is-dark">{commentary.length}</span>
-                                <span class="tag is-info">100</span>
-                            </div>
-                        </div>
-                    )}
                 </div>
-                <div className="column">
-                    {Object.keys(comments).map(key => (
-                        <Commentary key={key} commentary={comments[key]} onCommentaryVoting={this.onCommentaryVoting} />
-                    ))}
-                </div>
-            </div>
+                <UserNameModal openModal={this.state.openModalUserName} onCloseModal={this.onCloseModal} onSubmitModal={this.onSubmitModal} />
+            </Fragment>
         );
     }
 }
