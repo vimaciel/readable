@@ -57,3 +57,11 @@ export function handleVotingPost(id, vote) {
         })
     }
 }
+
+export function handleGetPost(id) {
+    return (dispatch) => {
+        postsApi.getPost(id).then(post => {
+            dispatch(getPost(post))
+        })
+    }
+}

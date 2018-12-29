@@ -1,13 +1,11 @@
 import React, { Component, Fragment } from 'react'
 import { handlePostDetailInitialData } from "../actions/share"
 import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
-import { getPostCategoryHeader } from '../helpers/common'
 import { connect } from 'react-redux'
 import { handleVotingPost } from "../actions/posts"
 import Commentary from "./Commentary"
-import Vote from './Vote'
-import DateTimeTag from './DateTimeTag'
 import UserNameModal from './UserNameModal'
+import Post from './Post'
 
 
 class PostDetail extends Component {
@@ -110,34 +108,14 @@ class PostDetail extends Component {
     }
 
     render() {
-        const { title, author, body, category, timestamp, voteScore } = this.state.post
-        const { commentary, comments } = this.state
+        const { post, commentary, comments } = this.state
 
         const detailPostClass = `column ${!Object.keys(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (
             <Fragment>
                 <div className="columns">
                     <div className={detailPostClass}>
-                        <div className="content-container hover-card">
-                            <nav className="level">
-                                {getPostCategoryHeader(category)}
-                                <div className="level-right">
-                                    <div className="level-item">
-                                        <DateTimeTag dateTime={timestamp} />
-                                    </div>
-                                </div>
-                            </nav>
-                            <div className="columns is-mobile is-gapless">
-                                <div className="column is-10">
-                                    <p className="title is-4">{title}</p>
-                                    <p className="subtitle">{author}</p>
-                                    <p className="body">{body}</p>
-                                </div>
-                                <div className="column is-2">
-                                    <Vote voteScore={voteScore} onVoting={this.onPostVoting} />
-                                </div>
-                            </div>
-                        </div>
+                        <Post post={post} />
                         <div className="commentary-field">
                             <div className="field has-addons">
                                 <div className="control is-expanded">

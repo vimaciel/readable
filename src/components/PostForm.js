@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import CategorySelection from './CategorySelection';
+import { handleGetPost } from '../actions/posts'
+import { Categories } from '../helpers/categoriesApi'
+import DateTimeTag from './DateTimeTag'
+import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
-import { Categories } from '../helpers/categoriesApi';
 import * as postApi from '../helpers/postsApi'
+import { isObjectEmpty, getPostCategoryHeader } from '../helpers/common'
 
 class PostForm extends Component {
     state = {
         redirect: false,
+        redirectTo: '',
         categorySelected: Categories.react,
         openModalUserName: false,
         title: {
@@ -18,6 +22,33 @@ class PostForm extends Component {
         body: {
             value: '',
             valid: true
+        },
+        post: {}
+    }
+
+    componentWillUpdate(prevState) {
+        if (prevState.post !== null && prevState.post !== this.state.post) {
+            const { post } = prevState
+
+            this.setState({
+                categorySelected: post.category,
+                title: {
+                    ...this.state.title,
+                    value: post.title
+                },
+                body: {
+                    ...this.state.body,
+                    value: post.body
+                },
+                post
+            })
+        }
+    }
+
+    componentDidMount() {
+        const { id } = this.props.match.params
+        if (id) {
+            this.props.dispatch(handleGetPost(id))
         }
     }
 
@@ -46,7 +77,8 @@ class PostForm extends Component {
     onSubmit = (e) => {
         e.preventDefault()
 
-        if (this.props.username === '') {
+        // Only shows the modal username when is a new post
+        if (isObjectEmpty(this.state.post) && this.props.username === '') {
             this.setState({
                 openModalUserName: true
             })
@@ -84,43 +116,62 @@ class PostForm extends Component {
         })
     }
 
-    onCloseModal = () => {
+    onCloseModal = (e) => {
+        e.preventDefault()
+
         this.setState({
             openModalUserName: false
         })
     }
 
-    onSubmitModal = (_, username) => {
+    onSubmitModal = (e, username) => {
         this.savePost(username)
-        this.onCloseModal()
+        this.onCloseModal(e)
     }
 
     savePost = (username) => {
         if (this.isFormValid()) {
-            const { title, body } = this.state
+            const { title, body, post } = this.state
+            const id = isObjectEmpty(post) ? null : post.id
 
-            postApi.newPost({
+            postApi.savePost({
+                id,
                 title: title.value,
                 body: body.value,
                 author: username,
                 category: this.state.categorySelected
-            })         
+            })
+
+            console.log(id)
 
             this.setState({
-                redirect: true
+                redirect: true,
+                redirectTo: id !== null ? `/post/${id}/detail` : '/'
             })
         }
     }
 
     render() {
-        const { title, body, redirect } = this.state
+        const { title, body, redirect, redirectTo, post } = this.state
 
         if (redirect) {
-            return <Redirect to='/' />
+            return <Redirect to={redirectTo} />
         }
 
         return (
             <div className="content-container">
+
+                {!isObjectEmpty(post) && (
+                    <nav className="level">
+                        {getPostCategoryHeader(post.category)}
+                        <div className="level-right">
+                            <div className="level-item">
+                                <DateTimeTag dateTime={post.timestamp} />
+                            </div>
+                        </div>
+                    </nav>
+                )}
+
                 <form onSubmit={this.onSubmit}>
 
                     <div className="field">
@@ -141,7 +192,11 @@ class PostForm extends Component {
 
                     <nav className="level is-mobile">
                         <div className="level-left">
-                            <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
+                            {isObjectEmpty(post) ? (
+                                <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
+                            ) : (
+                                    <button className="button is-primary is-danger">Delete</button>
+                                )}
                         </div>
 
                         <div className="level-right">
@@ -155,10 +210,13 @@ class PostForm extends Component {
     }
 }
 
-function mapStateToProps({ author }) {
+function mapStateToProps({ author, posts }, props) {
     const username = author.username !== undefined ? author.username : ''
+    const { id } = props.match.params
+
     return {
-        username
+        username,
+        post: id ? posts[id] : null
     }
 }
 

@@ -1,7 +1,12 @@
 import * as service from '../helpers/api'
 import * as uuid from 'uuid'
 
-export const newPost = (post) => {
+export const savePost = (post) => {
+    if(post.id !== null){
+        service.put(`posts/${post.id}`, post)
+        return
+    }
+
     post.timestamp = Date.now()
     post.id = uuid.v1()
     service.post('posts', post);
@@ -29,9 +34,13 @@ export const votingPost = (id, vote) => {
     return service.post(`posts/${id}`, body)
 }
 
+export const getPost =(id) => {
+    return service.get(`posts/${id}`)
+}
+
 export const getPostDetailInicialData = (id) =>{
     return Promise.all([
-        service.get(`posts/${id}`),
+        getPost(id),
         service.get(`posts/${id}/comments`)
     ]).then(([post, comments]) => ({
         post,
