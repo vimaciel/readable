@@ -8,6 +8,7 @@ import { connect } from 'react-redux'
 class PostsSlider extends Component {
     componentDidMount() {
         this.props.dispatch(handleGetAllPosts())
+        console.log('componentDidMount')
     }
 
     render() {

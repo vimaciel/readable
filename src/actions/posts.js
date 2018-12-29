@@ -65,3 +65,11 @@ export function handleGetPost(id) {
         })
     }
 }
+
+export function handleDeletePost(id) {
+    return (dispatch) => {
+        postsApi.deletePost(id).then(post => {
+            dispatch(updatePost(post))
+        })
+    }
+}

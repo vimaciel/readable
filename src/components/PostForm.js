@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleGetPost } from '../actions/posts'
+import { handleGetPost, handleDeletePost } from '../actions/posts'
 import { Categories } from '../helpers/categoriesApi'
 import DateTimeTag from './DateTimeTag'
 import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
 import * as postApi from '../helpers/postsApi'
 import { isObjectEmpty, getPostCategoryHeader } from '../helpers/common'
+import Delete from './Delete'
 
 class PostForm extends Component {
     state = {
@@ -142,13 +143,20 @@ class PostForm extends Component {
                 category: this.state.categorySelected
             })
 
-            console.log(id)
-
             this.setState({
                 redirect: true,
                 redirectTo: id !== null ? `/post/${id}/detail` : '/'
             })
         }
+    }
+
+    onDeletePost = () => {
+        this.props.dispatch(handleDeletePost(this.state.post.id))
+
+        this.setState({
+            redirect: true,
+            redirectTo: '/'
+        })
     }
 
     render() {
@@ -195,12 +203,17 @@ class PostForm extends Component {
                             {isObjectEmpty(post) ? (
                                 <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
                             ) : (
-                                    <button className="button is-primary is-danger">Delete</button>
+                                    <Delete onYesClick={this.onDeletePost} />
                                 )}
                         </div>
 
                         <div className="level-right">
-                            <button className="button is-primary is-normal">Confirm</button>
+                            <button className="button is-success">
+                                <span className="icon is-small">
+                                    <i className="fas fa-check"></i>
+                                </span>
+                                <span>Save</span>
+                            </button>
                         </div>
                     </nav>
                 </form>

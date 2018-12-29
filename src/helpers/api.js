@@ -23,6 +23,10 @@ export const post = (resource, body) => {
     return callServer(resource, 'POST', body);
 }
 
+export const del = (resource) => {
+    return callServer(resource, 'DELETE');
+}
+
 function callServer(resource, method, body = null) {
     let options = {
         method,
