@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import CategorySelecion from './CategorySelection'
 import { connect } from 'react-redux'
 import { Categories } from '../helpers/categoriesApi'
+import { handleGetPostsByCategory } from "../actions/posts";
 
 
 class PostsFilter extends Component {
@@ -9,12 +10,20 @@ class PostsFilter extends Component {
         itemSelected: Categories.all
     }
 
+    onCategorySelect = (itemSelected) => {
+        this.props.dispatch(handleGetPostsByCategory(itemSelected))
+
+        this.setState({
+            itemSelected
+        })
+    }
+
     render() {
         return (
             <div className="posts-filter-container">
                 <div className="columns">
                     <div className="column is-mobile">
-                        <CategorySelecion onCategorySelect={this.onCategorySelect} {...this.state}/>
+                        <CategorySelecion onCategorySelect={this.onCategorySelect} {...this.state} />
                     </div>
                 </div>
             </div>

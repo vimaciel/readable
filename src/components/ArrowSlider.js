@@ -3,7 +3,7 @@ import React from 'react';
 const ArrowSlider = (props) => {
     const { onClick, orientation } = props
     const arrowStyle = orientation === 'next' ? 'slick-arrow-right' : 'slick-arrow-left'
-    const icon = orientation == 'next' ? 'fa-angle-right' : 'fa-angle-left'
+    const icon = orientation === 'next' ? 'fa-angle-right' : 'fa-angle-left'
     
     return (
         <div className={arrowStyle}>
