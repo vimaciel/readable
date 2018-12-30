@@ -1,4 +1,4 @@
-import { GET_ALL_POSTS, GET_POSTS_BY_CATEGORY, UPDATE_POST } from '../actions/posts'
+import { GET_ALL_POSTS, GET_POSTS_BY_CATEGORY, UPDATE_POST, ADD_POST } from '../actions/posts'
 
 export default function Posts(state = {}, action) {
     switch (action.type) {
@@ -12,6 +12,12 @@ export default function Posts(state = {}, action) {
             console.log('GET_POSTS_BY_CATEGORY')
             return {
                 ...action.posts
+            }
+         case ADD_POST:
+         console.log('ADD_POST')
+            return {
+                ...state,
+                [action.post.id]: action.post
             }
         case UPDATE_POST:
             console.log('UPDATE_POST')

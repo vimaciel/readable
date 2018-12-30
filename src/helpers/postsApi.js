@@ -1,15 +1,14 @@
 import * as service from '../helpers/api'
 import * as uuid from 'uuid'
 
-export const savePost = (post) => {
-    if (post.id !== null) {
-        service.put(`posts/${post.id}`, post)
-        return
-    }
-
+export const addPost = (post) => {
     post.timestamp = Date.now()
-    post.id = uuid.v1()
-    service.post('posts', post);
+    post.id = uuid.v1()    
+    return service.post('posts', post)
+}
+
+export const updatePost = (post) => {
+    return service.put(`posts/${post.id}`, post)
 }
 
 export const deletePost = (id) => {

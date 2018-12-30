@@ -1,28 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleDeletePost } from '../actions/posts'
+import { handleDeletePost, handleAddPost, handleUpdatePost } from '../actions/posts'
 import { Categories } from '../helpers/categoriesApi'
 import DateTimeTag from './DateTimeTag'
 import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
-import * as postApi from '../helpers/postsApi'
 import { isObjectEmpty, getPostCategoryHeader } from '../helpers/common'
 import Delete from './Delete'
 
 class PostForm extends Component {
-    state = {
-        redirect: false,
-        redirectTo: '',
-        categorySelected: Categories.react,
-        openModalUserName: false,
-        title: {
-            value: '',
-            valid: true
-        },
-        body: {
-            value: '',
-            valid: true
+
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            redirect: false,
+            redirectTo: '',
+            categorySelected: Categories.react,
+            openModalUserName: false,
+            title: {
+                value: props.post.title || '',
+                valid: true
+            },
+            body: {
+                value: props.post.body,
+                valid: true
+            }
         }
     }
 
@@ -52,7 +56,7 @@ class PostForm extends Component {
         e.preventDefault()
 
         // Only shows the modal username when is a new post
-        if (isObjectEmpty(this.state.post) && this.props.username === '') {
+        if (isObjectEmpty(this.props.post) && this.props.username === '') {
             this.setState({
                 openModalUserName: true
             })
@@ -105,16 +109,24 @@ class PostForm extends Component {
 
     savePost = (username) => {
         if (this.isFormValid()) {
-            const { title, body, post } = this.state
+            const { title, body, categorySelected } = this.state
+            const { post, dispatch } = this.props
             const id = isObjectEmpty(post) ? null : post.id
 
-            postApi.savePost({
-                id,
-                title: title.value,
-                body: body.value,
-                author: username,
-                category: this.state.categorySelected
-            })
+            if (id !== null) {
+                dispatch(handleUpdatePost({
+                    id,
+                    title: title.value,
+                    body: body.value
+                }))
+            } else {
+                dispatch(handleAddPost({
+                    title: title.value,
+                    body: body.value,
+                    author: username,
+                    category: categorySelected
+                }))
+            }
 
             this.setState({
                 redirect: true,
@@ -128,15 +140,11 @@ class PostForm extends Component {
         this.props.history.push('/')
     }
 
-    componentWillMount() {
-        console.log(this.props.posts)
-    }
-
     render() {
         const { title, body, redirect, redirectTo } = this.state
-        const { post } = this.props     
+        const { post } = this.props
         const isEdit = !isObjectEmpty(post)
-        
+
 
         if (redirect) {
             return <Redirect to={redirectTo} />
@@ -178,10 +186,10 @@ class PostForm extends Component {
                         <div className="level-left">
                             {isEdit ? (
                                 <Delete onYesClick={this.onDeletePost} />
-                            ):                           
-                            (
-                                <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
-                            )}
+                            ) :
+                                (
+                                    <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
+                                )}
                         </div>
 
                         <div className="level-right">
