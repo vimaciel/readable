@@ -165,3 +165,17 @@ body {
 .commentary-counter{
   margin-top: 10px;
 }
+
+.slick-arrow-left {
+  position: absolute;
+  z-index: 9999;
+  top: 40%;
+  left: -6%;
+}
+
+.slick-arrow-right {
+  position: absolute;
+  z-index: 9999;
+  top: 40%;
+  right: -6%;
+}

@@ -3,15 +3,18 @@ import Slider from "react-slick"
 import NewPostCard from './NewPostCard'
 import PostCard from './PostCard';
 import { connect } from 'react-redux'
+import ArrowSlider from './ArrowSlider'
 
-class PostsSlider extends Component {   
+class PostsSlider extends Component {
     render() {
         const settings = {
             dots: true,
             infinite: false,
             speed: 500,
             slidesToShow: 3,
-            slidesToScroll: 1,
+            slidesToScroll: 1,            
+            nextArrow: <ArrowSlider orientation="next" />,
+            prevArrow: <ArrowSlider orientation="prev" />,
             responsive: [
                 {
                     breakpoint: 1024,
@@ -27,14 +30,16 @@ class PostsSlider extends Component {
                     settings: {
                         slidesToShow: 2,
                         slidesToScroll: 2,
-                        initialSlide: 2
+                        initialSlide: 2,
+                        arrows: false
                     }
                 },
                 {
                     breakpoint: 480,
                     settings: {
                         slidesToShow: 1,
-                        slidesToScroll: 1
+                        slidesToScroll: 1,
+                        arrows: false
                     }
                 }
             ]

@@ -5,6 +5,7 @@
   "dependencies": {
     "bulma": "^0.7.2",
     "js-cookie": "^2.2.0",
+    "mobile-detect": "^1.4.3",
     "react": "^16.6.3",
     "react-contenteditable": "^3.2.4",
     "react-dom": "^16.6.3",
