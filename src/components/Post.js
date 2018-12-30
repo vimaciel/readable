@@ -13,7 +13,7 @@ class Post extends Component {
     }
 
     onPostVoting = (vote) => {
-        this.props.dispatch(handleVotingPost(this.state.post.id, vote))
+        this.props.dispatch(handleVotingPost(this.props.post.id, vote))
     }
 
     onClickPost = () => {
