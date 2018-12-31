@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom'
 import { handleVotingPost } from "../actions/posts"
 import PostHeader from './PostHeader'
 import Vote from './Vote'
+import PostFooter from './PostFooter'
 
 
 class Post extends Component {
@@ -48,6 +49,7 @@ class Post extends Component {
                         <Vote voteScore={voteScore} onVoting={this.onPostVoting} />
                     </div>
                 </div>
+                <PostFooter post={this.props.post}/>
             </div>
         );
     }

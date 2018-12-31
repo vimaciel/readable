@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PostHeader from './PostHeader'
-import { Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom"
+import PostFooter from './PostFooter'
 
 class PostCard extends Component {
     state = {
@@ -35,6 +36,8 @@ class PostCard extends Component {
                         <p className="author">{author}</p>
                         <p className="body">"{body}"</p>
                     </div>
+
+                    <PostFooter post={this.props.post} isCard={true}/>
                 </div>
             </a>
         )

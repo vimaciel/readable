@@ -179,3 +179,11 @@ body {
   top: 40%;
   right: -6%;
 }
+
+.post-footer {
+  display: flex;
+}
+
+.post-footer > .level-item {
+  margin:5px;
+}

@@ -92,7 +92,7 @@ class PostDetail extends Component {
 
     render() {
         const { commentary, comments } = this.state
-        const { postId } = this.props
+        const { postId } = this.props        
 
         const detailPostClass = `column ${!isObjectEmpty(comments).length ? 'is-full' : 'is-three-fifths'}`
         return (

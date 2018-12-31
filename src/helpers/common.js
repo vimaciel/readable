@@ -1,4 +1,3 @@
-import React from 'react'
 import ReactIcon from '../images/react.png'
 import ReduxIcon from '../images/redux.png'
 import UdacityIcon from '../images/udacity.png'
