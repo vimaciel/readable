@@ -3,7 +3,6 @@ import { GET_COMMENTS, SAVE_COMMENTARY, UPDATE_COMMENTARY } from '../actions/com
 export default function categories(state = {}, action) {
     switch (action.type) {
         case GET_COMMENTS:
-            console.log(action.comments)
             return {
                 ...state,
                 ...action.comments

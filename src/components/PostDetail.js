@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { handleSaveCommentary, handleVotingCommentary } from "../actions/comments"
+import { handleSaveCommentary, handleVotingCommentary, handleGetComments } from "../actions/comments"
 import { connect } from 'react-redux'
 import Commentary from "./Commentary"
 import UserNameModal from './UserNameModal'
@@ -15,18 +15,11 @@ class PostDetail extends Component {
         openModalUserName: false
     }
 
-    componentWillUpdate(prevProps) {
-        if (prevProps.username !== this.state.username) {
-            this.setState({
-                username: prevProps.username
-            })
-        }
+    componentDidMount() {
+        const { match, dispatch } = this.props
+        const { id } = match.params
 
-        if (prevProps.comments !== this.state.comments) {
-            this.setState({
-                comments: prevProps.comments
-            })
-        }
+        dispatch(handleGetComments(id))
     }
 
     onCommentaryVoting = (id, vote) => {
@@ -91,10 +84,11 @@ class PostDetail extends Component {
     }
 
     render() {
-        const { commentary, comments } = this.state
-        const { postId } = this.props        
+        const { commentary } = this.state
+        const { postId, comments } = this.props
 
-        const detailPostClass = `column ${!isObjectEmpty(comments).length ? 'is-full' : 'is-three-fifths'}`
+        const detailPostClass = `column ${isObjectEmpty(comments) ? 'is-full' : 'is-three-fifths'}`
+        
         return (
             <Fragment>
                 <div className="columns">

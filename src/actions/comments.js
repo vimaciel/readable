@@ -25,10 +25,17 @@ export function updateCommentary(commentary) {
     }
 }
 
+export function handleGetComments(postId) {
+    return (dispatch) => {
+        commentsApi.getComments(postId).then(comments => {
+            dispatch(getComments(comments))
+        })
+    }
+}
+
 export function handleSaveCommentary(commentary) {
     return (dispatch) => {
         commentsApi.newCommentary(commentary).then(newCommentary => {
-            console.log(newCommentary)
             dispatch(saveCommentary(newCommentary))
         })
     }
