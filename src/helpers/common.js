@@ -57,20 +57,9 @@ export const getPostCategoryHeader = (category = 'react') => {
             categoryInfo.icon = ReactIcon
             categoryInfo.alt = 'ReactIcon'
             categoryInfo.color = '#6ECDED'
-    }
-
-    return (
-        <div className="level-left">
-            <div className="level-item">
-                <figure className="image is-48x48">
-                    <img className="is-rounded" alt={categoryInfo.alt} src={categoryInfo.icon} />
-                </figure>
-            </div>
-            <div className="level-item">
-                <b style={{ color: categoryInfo.color }}>{capitalizeFirstLetter(category)}</b>
-            </div>
-        </div>
-    )
+    }  
+    
+    return categoryInfo
 }
 
 export const isObjectEmpty = (obj) => {

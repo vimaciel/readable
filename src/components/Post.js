@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getPostCategoryHeader } from '../helpers/common'
 import { Redirect } from 'react-router-dom'
 import { handleVotingPost } from "../actions/posts"
-import DateTimeTag from './DateTimeTag'
+import PostHeader from './PostHeader'
 import Vote from './Vote'
 
 
@@ -30,7 +29,7 @@ class Post extends Component {
             </div>
         }
 
-        const { id, title, author, body, category, timestamp, voteScore } = this.props.post
+        const { id, title, author, body, voteScore } = this.props.post
 
         if (this.state.redirect) {
             return <Redirect push to={`/post/${id}/edit`}></Redirect>
@@ -38,14 +37,7 @@ class Post extends Component {
 
         return (
             <div className="content-container hover-card" >
-                <nav className="level" onClick={this.onClickPost}>
-                    {getPostCategoryHeader(category)}
-                    <div className="level-right">
-                        <div className="level-item">
-                            <DateTimeTag dateTime={timestamp} />
-                        </div>
-                    </div>
-                </nav>
+                <PostHeader post={this.props.post} onClickPostHeader={this.onClickPost}/>
                 <div className="columns is-mobile is-gapless">
                     <div className="column is-10" onClick={this.onClickPost}>
                         <p className="title is-4">{title}</p>

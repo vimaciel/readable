@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getPostCategoryHeader } from '../helpers/common'
-import DateTimeTag from './DateTimeTag'
+import PostHeader from './PostHeader'
 import { Redirect } from "react-router-dom";
 
 class PostCard extends Component {
@@ -18,7 +17,7 @@ class PostCard extends Component {
     }
 
     render() {
-        const { id, title, body, author, timestamp, category } = this.props.post
+        const { id, title, body, author } = this.props.post
 
         if (this.state.redirect) {
             return <Redirect push to={`/post/${id}/detail`} />
@@ -28,14 +27,7 @@ class PostCard extends Component {
             <a href="/" onClick={this.onCardClick}>
                 <div className="hover-card card">
                     <header>
-                        <nav className="level">
-                            {getPostCategoryHeader(category)}
-                            <div className="level-right">
-                                <div className="level-item">
-                                    <DateTimeTag dateTime={timestamp} />
-                                </div>
-                            </div>
-                        </nav>
+                        <PostHeader post={this.props.post} onClickPostHeader={this.onCardClick}/>
                     </header>
 
                     <div className="card-content">

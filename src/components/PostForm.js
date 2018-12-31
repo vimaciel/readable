@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { handleDeletePost, handleAddPost, handleUpdatePost } from '../actions/posts'
 import { Categories } from '../helpers/categoriesApi'
-import DateTimeTag from './DateTimeTag'
+import PostHeader from './PostHeader'
 import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
-import { isObjectEmpty, getPostCategoryHeader } from '../helpers/common'
+import { isObjectEmpty } from '../helpers/common'
 import Delete from './Delete'
 
 class PostForm extends Component {
@@ -154,14 +154,7 @@ class PostForm extends Component {
             <div className="content-container">
 
                 {isEdit && (
-                    <nav className="level">
-                        {getPostCategoryHeader(post.category)}
-                        <div className="level-right">
-                            <div className="level-item">
-                                <DateTimeTag dateTime={post.timestamp} />
-                            </div>
-                        </div>
-                    </nav>
+                   <PostHeader post={post}/>
                 )}
 
                 <form onSubmit={this.onSubmit}>
