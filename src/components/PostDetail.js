@@ -18,9 +18,9 @@ class PostDetail extends Component {
 
     componentDidMount() {
         const { match, dispatch } = this.props
-        const { id } = match.params
+        const postId = match.params.post_id
 
-        dispatch(handleGetComments(id))
+        dispatch(handleGetComments(postId))
     }
 
     onCommentaryVoting = (id, vote) => {
@@ -89,7 +89,7 @@ class PostDetail extends Component {
         const { postId, comments } = this.props
 
         const detailPostClass = `column ${isObjectEmpty(comments) ? 'is-full' : 'is-three-fifths'}`
-        
+
         return (
             <Fragment>
                 <div className="columns">
@@ -129,7 +129,7 @@ class PostDetail extends Component {
 }
 
 function mapStateToProps({ posts, author, comments }, props) {
-    const { id } = props.match.params
+    const id = props.match.params.post_id
 
     return {
         postId: Object.keys(posts).find(key => posts[key].id === id),

@@ -111,11 +111,11 @@ class PostForm extends Component {
         if (this.isFormValid()) {
             const { title, body, categorySelected } = this.state
             const { post, dispatch } = this.props
-            const id = isObjectEmpty(post) ? null : post.id
+            const isEdit = !isObjectEmpty(post)
 
-            if (id !== null) {
+            if (isEdit) {
                 dispatch(handleUpdatePost({
-                    id,
+                    id: post.id,
                     title: title.value,
                     body: body.value
                 }))
@@ -130,7 +130,7 @@ class PostForm extends Component {
 
             this.setState({
                 redirect: true,
-                redirectTo: id !== null ? `/post/${id}/detail` : '/'
+                redirectTo: isEdit ? `/${post.category}/${post.id}` : '/'
             })
         }
     }
@@ -154,7 +154,7 @@ class PostForm extends Component {
             <div className="content-container">
 
                 {isEdit && (
-                   <PostHeader post={post}/>
+                    <PostHeader post={post} />
                 )}
 
                 <form onSubmit={this.onSubmit}>

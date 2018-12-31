@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 
 class Delete extends PureComponent {
     state = {
@@ -30,13 +30,13 @@ class Delete extends PureComponent {
         const modalClass = openModal ? 'modal is-active' : 'modal'
 
         return (
-            <div>
-                <a href="/" className="button is-danger is-outlined" onClick={this.onDeleteClick}>
+            <Fragment>
+                <button className="button is-danger is-outlined" onClick={this.onDeleteClick}>
                     <span>Delete</span>
                     <span className="icon is-small">
                         <i className="fas fa-times"></i>
                     </span>
-                </a>
+                </button>
                 <div className={modalClass}>
                     <div className="modal-background"></div>
                     <div className="modal-content">
@@ -47,17 +47,17 @@ class Delete extends PureComponent {
                             <div className="card-content">
                                 <div className="field is-grouped">
                                     <div className="control">
-                                        <a href="/" onClick={this.onYesClick} className="button is-link">Yes</a>
+                                        <button onClick={this.onYesClick} className="button is-link">Yes</button>
                                     </div>
                                     <div className="control">
-                                        <a href="/" onClick={this.onCloseModal} className="button">No</a>
+                                        <button onClick={this.onCloseModal} className="button">No</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </Fragment>
         );
     }
 }

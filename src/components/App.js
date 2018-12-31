@@ -28,7 +28,7 @@ class App extends Component {
               <Route path="/" exact component={Home} />
               <Route path="/post/new" exact component={PostForm} />
               <Route path="/post/:id/edit" exact component={PostForm} />
-              <Route path="/post/:id/detail" exact component={PostDetail} />
+              <Route path="/:category/:post_id" exact component={PostDetail} />
             </Switch>
           </div>
         </Fragment>

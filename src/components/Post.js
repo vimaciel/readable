@@ -24,7 +24,6 @@ class Post extends Component {
         }
 
         const { title, author, body, voteScore } = this.props.post
-        const { isCardSlider } = this.props
 
         return (
             <div className="content-container hover-card" >

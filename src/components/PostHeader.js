@@ -36,15 +36,15 @@ class PostHeader extends Component {
                     </div>
                 </div>
                 <div className="level-right">
-                    <p class="buttons">
+                    <div className="buttons">
                         <Delete onYesClick={this.onDeletePost} />
-                        <a onClick={this.onEditClick} href="/" class="button">
+                        <button onClick={this.onEditClick} className="button">
                             <span>Edit</span>
-                            <span class="icon is-small">
-                                <i class="fas fa-edit"></i>
+                            <span className="icon is-small">
+                                <i className="fas fa-edit"></i>
                             </span>
-                        </a>
-                    </p>
+                        </button>
+                    </div>
                 </div>
             </nav>
         )
