@@ -7,6 +7,7 @@ import Post from './Post'
 import { isObjectEmpty } from '../helpers/common'
 
 
+
 class PostDetail extends Component {
     state = {
         commentary: '',

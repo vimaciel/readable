@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
 import { handleVotingPost } from "../actions/posts"
 import PostHeader from './PostHeader'
 import Vote from './Vote'
@@ -16,12 +15,6 @@ class Post extends Component {
         this.props.dispatch(handleVotingPost(this.props.post.id, vote))
     }
 
-    onClickPost = () => {
-        this.setState({
-            redirect: true
-        })
-    }
-
     render() {
 
         if (this.props.post === null) {
@@ -30,15 +23,12 @@ class Post extends Component {
             </div>
         }
 
-        const { id, title, author, body, voteScore } = this.props.post
-
-        if (this.state.redirect) {
-            return <Redirect push to={`/post/${id}/edit`}></Redirect>
-        }
+        const { title, author, body, voteScore } = this.props.post
+        const { isCardSlider } = this.props
 
         return (
             <div className="content-container hover-card" >
-                <PostHeader post={this.props.post} onClickPostHeader={this.onClickPost}/>
+                <PostHeader post={this.props.post} />
                 <div className="columns is-mobile is-gapless">
                     <div className="column is-10" onClick={this.onClickPost}>
                         <p className="title is-4">{title}</p>
@@ -49,7 +39,7 @@ class Post extends Component {
                         <Vote voteScore={voteScore} onVoting={this.onPostVoting} />
                     </div>
                 </div>
-                <PostFooter post={this.props.post}/>
+                <PostFooter post={this.props.post} />
             </div>
         );
     }

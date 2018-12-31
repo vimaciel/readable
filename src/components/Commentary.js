@@ -30,7 +30,7 @@ class Commentary extends Component {
                         </nav>
                     </div>
                     <div className="column">
-                        <Vote voteScore={voteScore} isCommentaryVote={true} onVoting={this.onVoting} />
+                        <Vote voteScore={voteScore} isSmallVote={true} onVoting={this.onVoting} />
                     </div>
                 </div>
             </div>

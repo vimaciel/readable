@@ -1,9 +1,9 @@
 import React, { Component } from "react"
 import Slider from "react-slick"
 import NewPostCard from './NewPostCard'
-import PostCard from './PostCard';
 import { connect } from 'react-redux'
 import ArrowSlider from './ArrowSlider'
+import PostCard from "./PostCard"
 
 class PostsSlider extends Component {
     render() {
@@ -48,7 +48,7 @@ class PostsSlider extends Component {
             <Slider {...settings} className="posts-slider">
                 <NewPostCard></NewPostCard>
                 {this.props.postIds.map(id => (
-                    <PostCard key={id} id={id} />
+                    <PostCard key={id} id={id} isCardSlider={true}/>
                 ))}
             </Slider>
         );

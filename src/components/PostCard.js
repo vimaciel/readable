@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import PostHeader from './PostHeader'
 import { Redirect } from "react-router-dom"
 import PostFooter from './PostFooter'
+import Vote from './Vote'
 
 class PostCard extends Component {
     state = {
@@ -18,7 +19,7 @@ class PostCard extends Component {
     }
 
     render() {
-        const { id, title, body, author } = this.props.post
+        const { id, title, body, author, voteScore } = this.props.post
 
         if (this.state.redirect) {
             return <Redirect push to={`/post/${id}/detail`} />
@@ -28,16 +29,23 @@ class PostCard extends Component {
             <a href="/" onClick={this.onCardClick}>
                 <div className="hover-card card">
                     <header>
-                        <PostHeader post={this.props.post} onClickPostHeader={this.onCardClick}/>
+                        <PostHeader post={this.props.post} onClickPostHeader={this.onCardClick} />
                     </header>
 
                     <div className="card-content">
-                        <p className="title">{title}</p>
-                        <p className="author">{author}</p>
-                        <p className="body">"{body}"</p>
+                        <div className="columns is-mobile is-gapless">
+                            <div className="column is-10">
+                                <p className="title">{title}</p>
+                                <p className="author">{author}</p>
+                                <p className="body">"{body}"</p>
+                            </div>
+                            <div className="column is-2">
+                                <Vote isSmallVote={true} voteScore={voteScore}/>
+                            </div>
+                        </div>
                     </div>
 
-                    <PostFooter post={this.props.post} isCard={true}/>
+                    <PostFooter post={this.props.post} isCard={true} />
                 </div>
             </a>
         )
