@@ -187,3 +187,18 @@ body {
 .post-footer > .level-item {
   margin:5px;
 }
+
+.page-not-found {
+  text-align: center;  
+}
+
+.page-not-found-image{
+  margin-top:10px;
+  margin-bottom:50px;
+}
+
+.label-selection{
+  text-align: center;
+  font-weight: bold;
+  padding: 10px;
+}

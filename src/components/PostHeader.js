@@ -19,8 +19,15 @@ class PostHeader extends Component {
         this.props.history.push(`/post/${id}/edit`)
     }
 
+    onDetailClick = (e) => {
+        e.preventDefault()
+        const { id, category } = this.props.post
+        this.props.history.push(`/${category}/${id}`)
+    }
+
     render() {
         const { category } = this.props.post
+        const { isDeleteVisible, isEditVisible, isDetailVisible } = this.props
         const categoryInfo = getPostCategoryHeader(category)
 
         return (
@@ -37,13 +44,23 @@ class PostHeader extends Component {
                 </div>
                 <div className="level-right">
                     <div className="buttons">
-                        <Delete onYesClick={this.onDeletePost} />
-                        <button onClick={this.onEditClick} className="button">
-                            <span>Edit</span>
-                            <span className="icon is-small">
-                                <i className="fas fa-edit"></i>
-                            </span>
-                        </button>
+                        {isDeleteVisible && <Delete onYesClick={this.onDeletePost} />}
+                        {isEditVisible && (
+                            <button onClick={this.onEditClick} className="button">
+                                <span>Edit</span>
+                                <span className="icon is-small">
+                                    <i className="fas fa-edit"></i>
+                                </span>
+                            </button>
+                        )}
+                        {isDetailVisible && (
+                            <button onClick={this.onDetailClick} className="button">
+                                <span className="icon is-small">
+                                    <i className="fas fa-plus"></i>
+                                </span>
+                                <span>Detail</span>
+                            </button>
+                        )}
                     </div>
                 </div>
             </nav>

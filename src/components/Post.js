@@ -4,12 +4,10 @@ import { handleVotingPost } from "../actions/posts"
 import PostHeader from './PostHeader'
 import Vote from './Vote'
 import PostFooter from './PostFooter'
+import { Redirect } from 'react-router-dom'
 
 
 class Post extends Component {
-    state = {
-        redirect: false
-    }
 
     onPostVoting = (vote) => {
         this.props.dispatch(handleVotingPost(this.props.post.id, vote))
@@ -17,17 +15,15 @@ class Post extends Component {
 
     render() {
 
-        if (this.props.post === null) {
-            return <div className="content-container">
-                <b>The post doesn't exist</b>
-            </div>
+        if (this.props.post === null || this.props.post.deleted) {
+            return <Redirect to="/page-not-found" />
         }
 
         const { title, author, body, voteScore } = this.props.post
 
         return (
             <div className="content-container hover-card" >
-                <PostHeader post={this.props.post} />
+                <PostHeader post={this.props.post} isDeleteVisible={true} isEditVisible={true}/>
                 <div className="columns is-mobile is-gapless">
                     <div className="column is-10" onClick={this.onClickPost}>
                         <p className="title is-4">{title}</p>

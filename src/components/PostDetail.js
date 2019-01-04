@@ -139,3 +139,5 @@ function mapStateToProps({ posts, author, comments }, props) {
 }
 
 export default connect(mapStateToProps)(PostDetail)
+
+

@@ -5,14 +5,14 @@ import { connect } from 'react-redux'
 import ArrowSlider from './ArrowSlider'
 import PostCard from "./PostCard"
 
-class PostsSlider extends Component {
+class PostsSlider extends Component { 
     render() {
         const settings = {
             dots: true,
             infinite: false,
             speed: 500,
             slidesToShow: 3,
-            slidesToScroll: 1,            
+            slidesToScroll: 1,
             nextArrow: <ArrowSlider orientation="next" />,
             prevArrow: <ArrowSlider orientation="prev" />,
             responsive: [
@@ -48,7 +48,7 @@ class PostsSlider extends Component {
             <Slider {...settings} className="posts-slider">
                 <NewPostCard></NewPostCard>
                 {this.props.postIds.map(id => (
-                    <PostCard key={id} id={id} isCardSlider={true}/>
+                    <PostCard key={id} id={id} isCardSlider={true} />
                 ))}
             </Slider>
         );
