@@ -2,14 +2,10 @@ import React, { PureComponent } from 'react'
 import NotFoundImage from '../images/404.png'
 
 class NotFound extends PureComponent {
-    componentDidMount() {
-        this.props.handleAppClass()
-    }
-
     render() {
         return (
             <div className="page-not-found">
-                <section className="hero is-warning is-fullheight">
+                <section className="hero">
                     <div className="hero-body">
                         <div className="container">
                             <h1 className="title">

@@ -14,29 +14,8 @@ import PostDetail from './PostDetail'
 import NotFound from './NotFound'
 
 class App extends Component {
-
-  state = {
-    style: {
-      appClass: 'container',
-      alreadyUpdated: false
-    }
-  }
-
   componentDidMount() {
     this.props.dispatch(handleInitialData())
-  }
-
-  handleAppClass = (newClass) => {
-    if(this.state.style.alreadyUpdated){
-      return
-    }
-
-    this.setState({
-      style: {
-        appClass: newClass,
-        alreadyUpdated: true
-      }
-    })
   }
 
   render() {
@@ -44,13 +23,13 @@ class App extends Component {
       <Router>
         <Fragment>
           <Header />
-          <div className={this.state.style.appClass}>
+          <div className='container'>
             <Switch>
-              <Route path="/" exact component={Home} />              
+              <Route path="/" exact component={Home} />
               <Route path="/post/new" exact component={PostForm} />
               <Route path="/post/:id/edit" exact component={PostForm} />
               <Route path="/:category/:post_id" exact component={PostDetail} />
-              <Route component={_ => <NotFound handleAppClass={this.handleAppClass} />} />
+              <Route component={NotFound} />
             </Switch>
           </div>
         </Fragment>

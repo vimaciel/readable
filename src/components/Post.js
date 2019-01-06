@@ -4,7 +4,6 @@ import { handleVotingPost } from "../actions/posts"
 import PostHeader from './PostHeader'
 import Vote from './Vote'
 import PostFooter from './PostFooter'
-import { Redirect } from 'react-router-dom'
 
 class Post extends Component {
 
@@ -12,11 +11,7 @@ class Post extends Component {
         this.props.dispatch(handleVotingPost(this.props.post.id, vote))
     }
 
-    render() {
-
-        if (this.props.post === null || this.props.post.deleted) {
-            return <Redirect to="/page-not-found" />
-        }
+    render() {     
 
         const { title, author, body, voteScore } = this.props.post
 

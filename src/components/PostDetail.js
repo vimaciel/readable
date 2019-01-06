@@ -5,20 +5,25 @@ import Commentary from "./Commentary"
 import Post from './Post'
 import { isObjectEmpty } from '../helpers/common'
 import CommentaryField from './CommentaryField'
+import NotFound from './NotFound'
 
 
-class PostDetail extends Component {    
+class PostDetail extends Component {
     componentDidMount() {
-        const { post, dispatch } = this.props
-        post !== null && dispatch(handleGetComments(post.id))
+        const { dispatch, postId } = this.props
+        dispatch(handleGetComments(postId))
     }
 
     onCommentaryVoting = (id, vote) => {
         this.props.dispatch(handleVotingCommentary(id, vote))
-    }   
+    }
 
     render() {
         const { post, comments, username } = this.props
+
+        if (this.props.post === null || this.props.post.deleted) {
+            return <NotFound />
+        }
 
         const detailPostClass = `column ${isObjectEmpty(comments) ? 'is-full' : 'is-three-fifths'}`
 
@@ -27,7 +32,7 @@ class PostDetail extends Component {
                 <div className="columns">
                     <div className={detailPostClass}>
                         <Post post={post} />
-                        <CommentaryField post={post} username={username}/>
+                        <CommentaryField post={post} username={username} />
                     </div>
                     <div className="column">
                         {Object.keys(comments).map(key => (
@@ -35,7 +40,7 @@ class PostDetail extends Component {
                         ))}
                     </div>
                 </div>
-                
+
             </Fragment>
         );
     }
@@ -49,7 +54,8 @@ function mapStateToProps({ posts, author, comments }, props) {
     return {
         post,
         username: author.username,
-        comments
+        comments,
+        postId
     }
 }
 
