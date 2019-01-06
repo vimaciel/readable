@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Categories } from '../helpers/categoriesApi'
+import { capitalizeFirstLetter } from "../helpers/common"
 
 class CategorySelection extends Component {   
     onSelect = (e) => {
@@ -23,7 +24,7 @@ class CategorySelection extends Component {
                     {hasAllItem && <li key='all' className={this.props.itemSelected === Categories.all ? 'is-active' : ''}><a href='/' onClick={this.onSelect} data-path=''>All</a></li>}
                     {Object.keys(categories).map(key => (
                         <li key={key} className={categories[key].path === this.props.itemSelected ? 'is-active' : ''}>
-                            <a href="/" data-path={categories[key].path} onClick={this.onSelect}>{categories[key].name}</a>
+                            <a href="/" data-path={categories[key].path} onClick={this.onSelect}>{capitalizeFirstLetter(categories[key].name)}</a>
                         </li>
                     ))}
                 </ul>

@@ -15,17 +15,14 @@ export default function Posts(state = {}, action) {
         case ADD_POST:
             return addNewObjectToState(state, action.post)
         case UPDATE_POST:
-            const key = parseInt(Object.keys(state).find(key => state[key].id === action.post.id))
-            const { body, category, commentCount, deleted, title, voteScore } = action.post
-
-            return {
-                ...state,
-                [key]: {
-                    ...state[key],
-                    body, category, commentCount, deleted, title, voteScore
+            const posts = { ...state }
+            Object.keys(posts).forEach(key => {
+                if (posts[key].id === action.post.id) {
+                    posts[key] = action.post
                 }
-            }
+            })
 
+            return posts
         default:
             return state
     }

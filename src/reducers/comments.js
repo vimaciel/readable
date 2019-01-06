@@ -9,13 +9,13 @@ export default function categories(state = {}, action) {
             return addNewObjectToState(state, action.commentary)
         case UPDATE_COMMENTARY:
             const comments = { ...state }
-            return Object.keys(comments).map(key => {
+            Object.keys(comments).forEach(key => {
                 if (comments[key].id === action.commentary.id) {
                     comments[key] = action.commentary
                 }
-
-                return comments[key]
             })
+
+            return comments
         default:
             return state
     }

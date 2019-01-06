@@ -1,17 +1,14 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import PostsSlider from './PostsSlider'
 import PostsFilter from './PostsFilter';
 
-
-class Home extends Component {
-    render() {
-        return (
-            <Fragment>
-                <PostsSlider />
-                <PostsFilter />
-            </Fragment>
-        )
-    }
+const Home = () => {
+    return (
+        <Fragment>
+            <PostsSlider />
+            <PostsFilter />
+        </Fragment>
+    )
 }
 
 export default Home

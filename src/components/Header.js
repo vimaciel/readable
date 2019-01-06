@@ -8,28 +8,7 @@ class Header extends Component {
     state = {
         mobileMenuOpen: false,
         modalUserNameOpen: false,
-        location: ''
     }
-
-    componentDidUpdate(prevProps) {
-        if (prevProps.location !== this.props.location) {
-            this.selectMenuItem(this.props.location)
-            this.setState({
-                location: this.props.location
-            })
-        }
-    }
-
-    componentDidMount() {
-        this.selectMenuItem(this.props.location)
-    }
-
-    selectMenuItem = ({ pathname }) => {
-        [...document.getElementById('menu').querySelectorAll('.navbar-item')].forEach(e => {
-            pathname === e.pathname ? e.classList.add('is-active') : e.classList.remove('is-active')
-        })
-    }
-
 
     onClickBurgerMenu = (e) => {
         e.preventDefault()
@@ -54,7 +33,7 @@ class Header extends Component {
 
     render() {
         const { mobileMenuOpen } = this.state
-        const username = this.props.username
+        const { username, pathname } = this.props
 
         let userLayout
         if (username === undefined || username === '') {
@@ -105,11 +84,11 @@ class Header extends Component {
 
                     <div id="menu" className={mobileMenuOpen ? 'is-active' : 'navbar-menu'}>
                         <div className="navbar-start">
-                            <a href="/" className="navbar-item">
+                            <a href="/" className={pathname === '/' ? 'navbar-item  is-active' : 'navbar-item'}>
                                 Home
                             </a>
 
-                            <a href="/post/new" className="navbar-item">
+                            <a href="/post/new" className={pathname === '/post/new' ? 'navbar-item  is-active' : 'navbar-item'}>
                                 New Post
                             </a>
                         </div>
@@ -125,10 +104,12 @@ class Header extends Component {
     }
 }
 
-function mapStateToProps({ author }) {
+function mapStateToProps({ author }, { location }) {
     const username = author.username
+    const pathname = location.pathname
     return {
-        username
+        username,
+        pathname
     }
 }
 
