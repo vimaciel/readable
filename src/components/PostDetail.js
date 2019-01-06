@@ -19,7 +19,7 @@ class PostDetail extends Component {
     }
 
     render() {
-        const { post, comments, username } = this.props
+        const { post, comments, commentaryIds, username } = this.props
 
         if (this.props.post === null || this.props.post.deleted) {
             return <NotFound />
@@ -35,8 +35,8 @@ class PostDetail extends Component {
                         <CommentaryField post={post} username={username} />
                     </div>
                     <div className="column">
-                        {Object.keys(comments).map(key => (
-                            <Commentary key={key} commentary={comments[key]} onCommentaryVoting={this.onCommentaryVoting} />
+                        {commentaryIds.map(id => (
+                            <Commentary key={id} commentary={comments[id]} onCommentaryVoting={this.onCommentaryVoting} />
                         ))}
                     </div>
                 </div>
@@ -54,6 +54,7 @@ function mapStateToProps({ posts, author, comments }, props) {
     return {
         post,
         username: author.username,
+        commentaryIds: Object.keys(comments).sort((a, b) => comments[b].timestamp - comments[a].timestamp),
         comments,
         postId
     }
