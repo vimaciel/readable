@@ -23,20 +23,35 @@ class Delete extends PureComponent {
     onYesClick = (e) => {
         e.preventDefault()
         this.props.onYesClick(e)
+
+        this.props.closeModalAfterYes && this.onCloseModal(e)
     }
 
     render() {
         const { openModal, message } = this.state
         const modalClass = openModal ? 'modal is-active' : 'modal'
 
+        const { deleteButtonLayout } = this.props
+        let deleteButton = (
+            <button className="button is-danger is-outlined" onClick={this.onDeleteClick}>
+                <span>Delete</span>
+                <span className="icon is-small">
+                    <i className="fas fa-times"></i>
+                </span>
+            </button>
+        )       
+
+        if (deleteButtonLayout !== undefined) {
+            deleteButton = <div onClick={this.onDeleteClick}>
+                {deleteButtonLayout}
+            </div>
+        }
+
+
         return (
             <Fragment>
-                <button className="button is-danger is-outlined" onClick={this.onDeleteClick}>
-                    <span>Delete</span>
-                    <span className="icon is-small">
-                        <i className="fas fa-times"></i>
-                    </span>
-                </button>
+                <div onClick={this.onDeleteClick} />
+                {deleteButton}
                 <div className={modalClass}>
                     <div className="modal-background"></div>
                     <div className="modal-content">

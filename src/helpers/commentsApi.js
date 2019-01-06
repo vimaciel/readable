@@ -7,7 +7,7 @@ export const getComments = (postId) => {
 
 export const newCommentary = (commentary) => {
     commentary.timestamp = Date.now()
-    commentary.id = uuid.v1()  
+    commentary.id = uuid.v1()
 
     return service.post('comments', commentary);
 }
@@ -18,4 +18,8 @@ export const votingCommentary = (id, vote) => {
     }
 
     return service.post(`comments/${id}`, body)
+}
+
+export const deleteCommentary = (id) => {
+    return service.del(`comments/${id}`)
 }

@@ -48,3 +48,11 @@ export function handleVotingCommentary(id, vote) {
         })
     }
 }
+
+export function handleDeleteCommentary(id) {
+    return (dispatch) => {
+        commentsApi.deleteCommentary(id).then(commentary => {
+            dispatch(updateCommentary(commentary))
+        })
+    }
+}
