@@ -23,3 +23,9 @@ export const votingCommentary = (id, vote) => {
 export const deleteCommentary = (id) => {
     return service.del(`comments/${id}`)
 }
+
+export const saveCommentary = (id, body) => {
+    return service.put(`comments/${id}`, {
+        body
+    })
+}

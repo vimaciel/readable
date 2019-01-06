@@ -56,3 +56,11 @@ export function handleDeleteCommentary(id) {
         })
     }
 }
+
+export function handlSaveCommentary(id, body) {
+    return (dispatch) => {
+        commentsApi.saveCommentary(id, body).then(commentary => {
+            dispatch(updateCommentary(commentary))
+        })
+    }
+}

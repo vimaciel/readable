@@ -1,17 +1,16 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Vote from './Vote'
 import DateTimeTag from './DateTimeTag'
 import Delete from './Delete'
-import { handleDeleteCommentary } from '../actions/comments'
+import { handleDeleteCommentary, handlSaveCommentary } from '../actions/comments'
 import { connect } from 'react-redux'
 
 class Commentary extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            buttonsVisible: false
-        }
+    state = {
+        buttonsVisible: false,
+        edit: false,
+        commentary: ''
     }
 
     onVoting = (vote) => {
@@ -19,19 +18,87 @@ class Commentary extends Component {
     }
 
     onChangeButtonsState = () => {
-        !this.props.commentary.deleted && (
+        !this.props.commentary.deleted && !this.state.edit && (
             this.setState(prevState => ({
                 buttonsVisible: !prevState.buttonsVisible
             }))
         )
     }
 
+    onChangeEditState = () => {
+        this.setState(prevState => ({
+            edit: !prevState.edit,
+            commentary: this.props.commentary.body
+        }))
+    }
+
+    onCommentaryChange = (e) => {
+        this.setState({
+            commentary: e.target.value
+        })
+    }
+
     onYesClick = () => {
         this.props.dispatch(handleDeleteCommentary(this.props.commentary.id))
     }
 
+    onSaveCommentary = () => {
+        this.props.dispatch(handlSaveCommentary(this.props.commentary.id, this.state.commentary))
+        this.onChangeEditState()
+    }
+
     render() {
         const { author, body, timestamp, voteScore, deleted } = this.props.commentary
+        const { edit, commentary } = this.state
+
+        let headerButtons = (
+            <Fragment>
+                <button className="button is-normal" onClick={this.onChangeEditState} >
+                    <span className="icon is-small">
+                        <i className="fas fa-edit"></i>
+                    </span>
+                    <span>Edit</span>
+                </button>
+
+                <Delete closeModalAfterYes={true} onYesClick={this.onYesClick} deleteButtonLayout={
+                    <button className="button is-normal is-danger is-outlined">
+                        <span className="icon is-small">
+                            <i className="fas fa-trash"></i>
+                        </span>
+                        <span>
+                            Delete
+                        </span>
+                    </button>
+                } />
+            </Fragment>
+        )
+
+        if (edit) {
+            headerButtons = (
+                <Fragment>
+                    {commentary.length > 0 && (
+                        <button className="button is-primary is-outlined is-normal" onClick={this.onSaveCommentary} data-tooltip="Tooltip Text">
+                            <span className="icon is-small">
+                                <i className="fas fa-check"></i>
+                            </span>
+                            <span>
+                                Save
+                            </span>
+                        </button>
+                    )}
+
+                    <button className="button is-danger is-outlined is-normal" onClick={this.onChangeEditState}>
+                        <span className="icon is-small">
+                            <i className="fas fa-times"></i>
+                        </span>
+                        <span>
+                            Cancel
+                        </span>
+                    </button>
+
+                </Fragment>
+            )
+        }
 
         return (
             <div className="commentary-container content hover-card" onMouseEnter={this.onChangeButtonsState} onMouseLeave={this.onChangeButtonsState}>
@@ -40,24 +107,14 @@ class Commentary extends Component {
                     <div className="column is-10">
                         {!deleted && (
                             <div className="buttons are-small commentary-buttons" style={{ display: this.state.buttonsVisible ? 'inline-flex' : 'none' }}>
-                                <button className="button is-small">
-                                    <span className="icon is-small">
-                                        <i className="fas fa-edit"></i>
-                                    </span>
-                                </button>
-
-                                <Delete closeModalAfterYes={true} onYesClick={this.onYesClick} deleteButtonLayout={
-                                    <button className="button is-small is-danger is-outlined">
-                                        <span className="icon is-small">
-                                            <i className="fas fa-times"></i>
-                                        </span>
-                                    </button>
-                                } />
+                                {headerButtons}
                             </div>
                         )}
 
                         <blockquote>
-                            {body}
+                            {edit ? (
+                                <input className="input" type="text" value={commentary} onChange={this.onCommentaryChange} placeholder="Your commentary"></input>
+                            ) : <span>{body}</span>}
                         </blockquote>
                         <nav className="level">
                             <div className="level-left">
