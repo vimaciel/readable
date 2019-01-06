@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { handleSaveCommentary } from "../actions/comments"
+import UserNameModal from './UserNameModal'
 
 class CommentaryField extends Component {
     state = {
-        commentary: ''
+        commentary: '',
+        openModalUserName: false
     }
 
     onCommentaryChange = (e) => {
@@ -12,8 +15,59 @@ class CommentaryField extends Component {
         })
     }
 
+    onConfirmCommentary = (e) => {
+        if (e.key === 'Enter') {
+            this.onSubmitCommentary(e)
+        }
+    }
+
+    onSubmitCommentary = (e) => {
+        e.preventDefault()
+
+        const { username } = this.props
+
+        console.log(username)
+
+        if (username === undefined || username === '') {
+            this.setState({
+                openModalUserName: true
+            })
+
+            return
+        }
+
+        this.saveCommentary(username)
+    }
+
+    saveCommentary = (username) => {
+        if (this.state.commentary !== '') {
+            const newCommentary = {
+                body: this.state.commentary,
+                author: username,
+                parentId: this.props.post.id
+            }
+
+            this.props.dispatch(handleSaveCommentary(newCommentary))
+            this.setState({
+                commentary: ''
+            })
+        }
+    }
+
+    onCloseModal = (e) => {
+        e.preventDefault()
+        this.setState({
+            openModalUserName: false
+        })
+    }
+
+    onSubmitModal = (e, username) => {
+        this.saveCommentary(username)
+        this.onCloseModal(e)
+    }
+
     render() {
-        const { commentary } = this.state
+        const { commentary, openModalUserName } = this.state
 
         return (
             <div>
@@ -37,14 +91,16 @@ class CommentaryField extends Component {
                         </div>
                     </div>
                 )}
+                <UserNameModal openModal={openModalUserName} onCloseModal={this.onCloseModal} onSubmitModal={this.onSubmitModal} />
             </div>
         )
     }
 }
 
-function mapStateToProps() {
+function mapStateToProps({ author }, { post }) {
     return {
-
+        post,
+        username: author.username
     }
 }
 

@@ -1,17 +1,12 @@
 import { GET_COMMENTS, SAVE_COMMENTARY, UPDATE_COMMENTARY } from '../actions/comments'
+import { addNewObjectToState } from '../helpers/common'
 
 export default function categories(state = {}, action) {
     switch (action.type) {
         case GET_COMMENTS:
-            return {
-                ...state,
-                ...action.comments
-            }
+            return action.comments
         case SAVE_COMMENTARY:
-            return {
-                ...state,
-                [action.commentary.id]: action.commentary
-            }
+            return addNewObjectToState(state, action.commentary)
         case UPDATE_COMMENTARY:
             const comments = { ...state }
             return Object.keys(comments).map(key => {

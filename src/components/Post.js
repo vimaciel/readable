@@ -6,7 +6,6 @@ import Vote from './Vote'
 import PostFooter from './PostFooter'
 import { Redirect } from 'react-router-dom'
 
-
 class Post extends Component {
 
     onPostVoting = (vote) => {
@@ -40,11 +39,4 @@ class Post extends Component {
     }
 }
 
-function mapStateToProps({ posts }, { id }) {
-    const post = posts[id]
-    return {
-        post: post ? post : null
-    }
-}
-
-export default connect(mapStateToProps)(Post)
+export default connect()(Post)

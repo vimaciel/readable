@@ -65,7 +65,18 @@ export const isObjectEmpty = (obj) => {
     return Object.keys(obj).length === 0
 }
 
+export const addNewObjectToState = (state, object) => {
+    const copyState = { ...state }
+    const key = getNextObjectKey(copyState)
+    copyState[key] = object
+
+    return copyState
+}
+
+
 export const getNextObjectKey = (obj) => {
     const keys = Object.keys(obj)
-    return parseInt(keys[keys.length - 1]) + 1
+    const nextKey = parseInt(keys[keys.length - 1]) + 1
+    return isNaN(nextKey) ? 0 : nextKey
+
 }
