@@ -1,6 +1,11 @@
 import * as service from '../helpers/api'
 import * as uuid from 'uuid'
 
+export const OrderBy = {
+    newest : 'newest',
+    mostVoted: 'mostVoted'
+}
+
 export const addPost = (post) => {
     post.timestamp = Date.now()
     post.id = uuid.v1()    

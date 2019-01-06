@@ -1,13 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleDeletePost, handleAddPost, handleUpdatePost } from '../actions/posts'
+import { handleAddPost, handleUpdatePost } from '../actions/posts'
 import { Categories } from '../helpers/categoriesApi'
 import PostHeader from './PostHeader'
 import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
 import { isObjectEmpty } from '../helpers/common'
-import Delete from './Delete'
 
 class PostForm extends Component {
 
@@ -24,7 +23,7 @@ class PostForm extends Component {
                 valid: true
             },
             body: {
-                value: props.post.body,
+                value: props.post.body || '',
                 valid: true
             }
         }
@@ -84,8 +83,7 @@ class PostForm extends Component {
 
         })
 
-        return validTitle || validBody
-
+        return validTitle && validBody
     }
 
     onCategorySelect = (categorySelected) => {
@@ -135,11 +133,6 @@ class PostForm extends Component {
         }
     }
 
-    onDeletePost = () => {
-        this.props.dispatch(handleDeletePost(this.props.post.id))
-        this.props.history.push('/')
-    }
-
     render() {
         const { title, body, redirect, redirectTo } = this.state
         const { post } = this.props
@@ -176,14 +169,11 @@ class PostForm extends Component {
                     </div>
 
                     <nav className="level is-mobile">
-                        <div className="level-left">
-                            {isEdit ? (
-                                <Delete onYesClick={this.onDeletePost} />
-                            ) :
-                                (
-                                    <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
-                                )}
-                        </div>
+                        {!isEdit && (
+                            <div className="level-left">
+                                <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
+                            </div>
+                        )}
 
                         <div className="level-right">
                             <button className="button is-success">

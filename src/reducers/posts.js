@@ -1,26 +1,24 @@
 import { GET_ALL_POSTS, GET_POSTS_BY_CATEGORY, UPDATE_POST, ADD_POST } from '../actions/posts'
+import { getNextObjectKey } from '../helpers/common'
 
 export default function Posts(state = {}, action) {
     switch (action.type) {
         case GET_ALL_POSTS:
-            console.log('GET_ALL_POSTS')
             return {
                 ...state,
                 ...action.posts
             }
         case GET_POSTS_BY_CATEGORY:
-            console.log('GET_POSTS_BY_CATEGORY')
             return {
                 ...action.posts
             }
-         case ADD_POST:
-         console.log('ADD_POST')
-            return {
-                ...state,
-                [action.post.id]: action.post
-            }
+        case ADD_POST:
+            const nextKey = getNextObjectKey(state)
+            const posts = { ...state }
+            posts[nextKey] = action.post
+            
+            return posts
         case UPDATE_POST:
-            console.log('UPDATE_POST')
             const key = parseInt(Object.keys(state).find(key => state[key].id === action.post.id))
             const { body, category, commentCount, deleted, title, voteScore } = action.post
 
@@ -31,6 +29,7 @@ export default function Posts(state = {}, action) {
                     body, category, commentCount, deleted, title, voteScore
                 }
             }
+
         default:
             return state
     }

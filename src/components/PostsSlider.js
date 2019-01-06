@@ -4,8 +4,9 @@ import NewPostCard from './NewPostCard'
 import { connect } from 'react-redux'
 import ArrowSlider from './ArrowSlider'
 import PostCard from "./PostCard"
+import { OrderBy } from '../helpers/postsApi'
 
-class PostsSlider extends Component { 
+class PostsSlider extends Component {
     render() {
         const settings = {
             dots: true,
@@ -55,10 +56,18 @@ class PostsSlider extends Component {
     }
 }
 
-function mapStateToProps({ posts }) {
+function mapStateToProps({ posts, orderPosts }) {
+    const { orderBy = OrderBy.newest } = orderPosts
     return {
-        postIds: Object.keys(posts).sort((a, b) => posts[b].timestamp - posts[a].timestamp)
+        postIds: Object.keys(posts).sort((a, b) => {
+            if (orderBy === OrderBy.newest) {
+                return posts[b].timestamp - posts[a].timestamp
+            }
+
+            return posts[b].voteScore - posts[a].voteScore
+        })
     }
+
 }
 
 export default connect(mapStateToProps)(PostsSlider)

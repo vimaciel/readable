@@ -5,12 +5,11 @@ import Commentary from "./Commentary"
 import UserNameModal from './UserNameModal'
 import Post from './Post'
 import { isObjectEmpty } from '../helpers/common'
-
+import CommentaryField from './CommentaryField'
 
 
 class PostDetail extends Component {
-    state = {
-        commentary: '',
+    state = {        
         username: '',
         comments: {},
         openModalUserName: false
@@ -25,13 +24,7 @@ class PostDetail extends Component {
 
     onCommentaryVoting = (id, vote) => {
         this.props.dispatch(handleVotingCommentary(id, vote))
-    }
-
-    onCommentaryChange = (e) => {
-        this.setState({
-            commentary: e.target.value
-        })
-    }
+    }    
 
     onConfirmCommentary = (e) => {
         if (e.key === 'Enter') {
@@ -84,8 +77,7 @@ class PostDetail extends Component {
         this.onCloseModal(e)
     }
 
-    render() {
-        const { commentary } = this.state
+    render() {        
         const { postId, comments } = this.props
 
         const detailPostClass = `column ${isObjectEmpty(comments) ? 'is-full' : 'is-three-fifths'}`
@@ -95,26 +87,7 @@ class PostDetail extends Component {
                 <div className="columns">
                     <div className={detailPostClass}>
                         <Post id={postId} />
-                        <div className="commentary-field">
-                            <div className="field has-addons">
-                                <div className="control is-expanded">
-                                    <input maxLength="100" className="input is-large" onKeyPress={this.onConfirmCommentary} value={commentary} onChange={this.onCommentaryChange} type="text" placeholder="Coment something..."></input>
-                                </div>
-                                <div className="control">
-                                    <a href="/" onClick={this.onSubmitCommentary} className="button is-info is-large" disabled={commentary === ''}>
-                                        Post
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        {commentary.length > 0 && (
-                            <div className="control commentary-counter">
-                                <div className="tags has-addons">
-                                    <span className="tag is-dark">{commentary.length}</span>
-                                    <span className="tag is-info">100</span>
-                                </div>
-                            </div>
-                        )}
+                        <CommentaryField />
                     </div>
                     <div className="column">
                         {Object.keys(comments).map(key => (

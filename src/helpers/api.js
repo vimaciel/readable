@@ -11,7 +11,7 @@ const headers = {
     'Content-Type': 'application/json'
 }
 
-export const getInicialData = (id) => {
+export const getInicialData = () => {
     return Promise.all([
         get('posts'),
         get('categories')

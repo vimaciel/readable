@@ -12,13 +12,13 @@ class PostCard extends Component {
     }
 
     render() {
-        const { title, body, author, voteScore } = this.props.post
+        const { title, body, author, voteScore, deleted } = this.props.post
 
 
         return (
             <div className="card hover-card">
                 <header>
-                    <PostHeader post={this.props.post} isDetailVisible={true}/>
+                    <PostHeader post={this.props.post} isDetailVisible={!deleted}/>
                 </header>
 
                 <div className="card-content">

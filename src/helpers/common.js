@@ -56,11 +56,16 @@ export const getPostCategoryHeader = (category = 'react') => {
             categoryInfo.icon = ReactIcon
             categoryInfo.alt = 'ReactIcon'
             categoryInfo.color = '#6ECDED'
-    }  
-    
+    }
+
     return categoryInfo
 }
 
 export const isObjectEmpty = (obj) => {
     return Object.keys(obj).length === 0
+}
+
+export const getNextObjectKey = (obj) => {
+    const keys = Object.keys(obj)
+    return parseInt(keys[keys.length - 1]) + 1
 }
