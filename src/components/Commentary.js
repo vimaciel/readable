@@ -30,7 +30,7 @@ class Commentary extends Component {
             edit: !prevState.edit,
             commentary: this.props.commentary.body
         }))
-    }
+    }   
 
     onCommentaryChange = (e) => {
         this.setState({
@@ -40,6 +40,12 @@ class Commentary extends Component {
 
     onYesClick = () => {
         this.props.dispatch(handleDeleteCommentary(this.props.commentary.id))
+    }
+
+    onConfirmSaveCommentary = (e) => {
+        if (e.key === 'Enter') {
+            this.onSaveCommentary()
+        }
     }
 
     onSaveCommentary = () => {
@@ -113,7 +119,7 @@ class Commentary extends Component {
 
                         <blockquote>
                             {edit ? (
-                                <input className="input" type="text" value={commentary} onChange={this.onCommentaryChange} placeholder="Your commentary"></input>
+                                <input autoFocus ref={e => (this.refEditInput = e)} className="input" type="text" onKeyPress={this.onConfirmSaveCommentary} value={commentary} onChange={this.onCommentaryChange} placeholder="Your commentary"></input>
                             ) : <span>{body}</span>}
                         </blockquote>
                         <nav className="level">

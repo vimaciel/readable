@@ -10,14 +10,14 @@ class UserNameModal extends Component {
 
     componentDidUpdate(prevProps) {
         if (prevProps.openModal !== this.props.openModal) {
-            document.getElementById('inputUserName').focus()
-
+            this.refInputUserName.focus()
             this.setState({
                 openModal: this.props.openModal
             })
         }
 
         if (prevProps.username !== this.props.username) {
+            this.refInputUserName.focus()
             this.setState({
                 username: this.props.username
             })
@@ -69,7 +69,7 @@ class UserNameModal extends Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="field">
                                     <div className="control has-icons-left">
-                                        <input id="inputUserName" className="input" value={this.state.username} onChange={this.onChangeUserName} type="text" placeholder="Type your name" onKeyPress={this.onConfirmUserName}></input>
+                                        <input ref={e => this.refInputUserName = e} className="input" value={this.state.username} onChange={this.onChangeUserName} type="text" placeholder="Type your name" onKeyPress={this.onConfirmUserName}></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-user"></i>
                                         </span>
