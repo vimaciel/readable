@@ -7,6 +7,7 @@ import PostHeader from './PostHeader'
 import CategorySelection from './CategorySelection'
 import UserNameModal from './UserNameModal'
 import { isObjectEmpty } from '../helpers/common'
+import PostFooter from './PostFooter'
 
 class PostForm extends Component {
 
@@ -173,6 +174,12 @@ class PostForm extends Component {
                             <div className="level-left">
                                 <CategorySelection itemSelected={this.state.categorySelected} smallControl={true} hasAllItem={false} onCategorySelect={this.onCategorySelect} />
                             </div>
+                        )}
+
+                        {isEdit && (
+                            <div className="level-left">
+                                <PostFooter post={post}/>
+                            </div>    
                         )}
 
                         <div className="level-right">
