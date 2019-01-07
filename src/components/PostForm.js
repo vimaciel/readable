@@ -108,22 +108,22 @@ class PostForm extends Component {
     savePost = (username) => {
         if (this.isFormValid()) {
             const { title, body, categorySelected } = this.state
-            const { post, dispatch } = this.props
+            const { post } = this.props
             const isEdit = !isObjectEmpty(post)
 
             if (isEdit) {
-                dispatch(handleUpdatePost({
+                this.props.updatePost({
                     id: post.id,
                     title: title.value,
                     body: body.value
-                }))
+                })
             } else {
-                dispatch(handleAddPost({
+                this.props.addPost({
                     title: title.value,
                     body: body.value,
                     author: username,
                     category: categorySelected
-                }))
+                })
             }
 
             this.setState({
@@ -202,4 +202,15 @@ function mapStateToProps({ author, posts }, props) {
     }
 }
 
-export default connect(mapStateToProps)(PostForm)
+function mapDispatchToProps(dispatch) {
+    return {
+        updatePost: (post) => {
+            dispatch(handleUpdatePost(post))
+        },
+        addPost: (post) => {
+            dispatch(handleAddPost(post))
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostForm)

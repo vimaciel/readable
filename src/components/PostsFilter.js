@@ -13,7 +13,7 @@ class PostsFilter extends Component {
     }
 
     onCategorySelect = (itemCategorySelected) => {
-        this.props.dispatch(handleGetPostsByCategory(itemCategorySelected))
+        this.props.getPostsByCategory(itemCategorySelected)
 
         this.setState({
             itemCategorySelected
@@ -23,7 +23,7 @@ class PostsFilter extends Component {
     onOrderBySelected = (e, itemOrderBySelected) => {
         e.preventDefault()
 
-        this.props.dispatch(setOrderBy(itemOrderBySelected))
+        this.props.setOrderBy(itemOrderBySelected)
 
         this.setState({
             itemOrderBySelected
@@ -67,4 +67,16 @@ class PostsFilter extends Component {
     }
 }
 
-export default connect()(PostsFilter)
+function mapDispatchToProps(dispatch) {
+    return {
+        getPostsByCategory: (category) => {
+            dispatch(handleGetPostsByCategory(category))
+        },
+
+        setOrderBy: (itemOrderBySelected) => {
+            dispatch(setOrderBy(itemOrderBySelected))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(PostsFilter)

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react'
 import Vote from './Vote'
 import DateTimeTag from './DateTimeTag'
 import Delete from './Delete'
-import { handleDeleteCommentary, handlSaveCommentary } from '../actions/comments'
+import { handleDeleteCommentary, handleSaveCommentary } from '../actions/comments'
 import { connect } from 'react-redux'
 
 class Commentary extends Component {
@@ -30,7 +30,7 @@ class Commentary extends Component {
             edit: !prevState.edit,
             commentary: this.props.commentary.body
         }))
-    }   
+    }
 
     onCommentaryChange = (e) => {
         this.setState({
@@ -39,7 +39,7 @@ class Commentary extends Component {
     }
 
     onYesClick = () => {
-        this.props.dispatch(handleDeleteCommentary(this.props.commentary.id))
+        this.props.deleteCommentary(this.props.commentary.id)
     }
 
     onConfirmSaveCommentary = (e) => {
@@ -49,7 +49,7 @@ class Commentary extends Component {
     }
 
     onSaveCommentary = () => {
-        this.props.dispatch(handlSaveCommentary(this.props.commentary.id, this.state.commentary))
+        this.props.saveCommentary(this.props.commentary.id, this.state.commentary)
         this.onChangeEditState()
     }
 
@@ -149,4 +149,16 @@ class Commentary extends Component {
     }
 }
 
-export default connect()(Commentary)
+function mapDispatchToProps(dispatch) {
+    return {
+        deleteCommentary: (commentaryId) => {
+            dispatch(handleDeleteCommentary(commentaryId))
+        },
+
+        saveCommentary: (commentaryId, body) => {
+            dispatch(handleSaveCommentary(commentaryId, body))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Commentary)

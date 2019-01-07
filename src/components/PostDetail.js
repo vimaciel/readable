@@ -10,12 +10,11 @@ import NotFound from './NotFound'
 
 class PostDetail extends Component {
     componentDidMount() {
-        const { dispatch, postId } = this.props
-        dispatch(handleGetComments(postId))
+        this.props.getComments(this.props.postId)
     }
 
     onCommentaryVoting = (id, vote) => {
-        this.props.dispatch(handleVotingCommentary(id, vote))
+        this.props.votingCommentary(id, vote)
     }
 
     render() {
@@ -60,6 +59,17 @@ function mapStateToProps({ posts, author, comments }, props) {
     }
 }
 
-export default connect(mapStateToProps)(PostDetail)
+function mapDispatchToProps(dispatch) {
+    return {
+        getComments: (postId) => {
+            dispatch(handleGetComments(postId))
+        },
+        votingCommentary: (commentaryId, vote) => {
+            dispatch(handleVotingCommentary(commentaryId, vote))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostDetail)
 
 

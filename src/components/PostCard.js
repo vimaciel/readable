@@ -8,7 +8,7 @@ import { handleVotingPost } from '../actions/posts'
 class PostCard extends Component {
 
     onPostVoting = (vote) => {
-        this.props.dispatch(handleVotingPost(this.props.post.id, vote))
+        this.props.votingPost(this.props.post.id, vote)
     }
 
     render() {
@@ -47,4 +47,12 @@ function mapStateToProps({ posts }, { id }) {
     }
 }
 
-export default connect(mapStateToProps)(PostCard)
+function mapDispatchToProps(dispatch) {
+    return {
+        votingPost: (postId, vote) => {
+            dispatch(handleVotingPost(postId, vote))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostCard)

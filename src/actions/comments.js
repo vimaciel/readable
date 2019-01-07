@@ -33,7 +33,7 @@ export function handleGetComments(postId) {
     }
 }
 
-export function handleSaveCommentary(commentary) {
+export function handleAddNewCommentary(commentary) {
     return (dispatch) => {
         commentsApi.newCommentary(commentary).then(newCommentary => {
             dispatch(saveCommentary(newCommentary))
@@ -57,7 +57,7 @@ export function handleDeleteCommentary(id) {
     }
 }
 
-export function handlSaveCommentary(id, body) {
+export function handleSaveCommentary(id, body) {
     return (dispatch) => {
         commentsApi.saveCommentary(id, body).then(commentary => {
             dispatch(updateCommentary(commentary))

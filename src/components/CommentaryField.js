@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { handleSaveCommentary } from "../actions/comments"
+import { handleAddNewCommentary } from "../actions/comments"
 import UserNameModal from './UserNameModal'
 
 class CommentaryField extends Component {
@@ -47,7 +47,7 @@ class CommentaryField extends Component {
                 parentId: this.props.post.id
             }
 
-            this.props.dispatch(handleSaveCommentary(newCommentary))
+            this.props.addNewCommentary(newCommentary)
             this.setState({
                 commentary: ''
             })
@@ -104,4 +104,12 @@ function mapStateToProps({ author }, { post }) {
     }
 }
 
-export default connect(mapStateToProps)(CommentaryField)
+function mapDispatchToProps(dispatch) {
+    return {
+        addNewCommentary: (commentary) => {
+            dispatch(handleAddNewCommentary(commentary))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentaryField)

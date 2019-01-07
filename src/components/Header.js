@@ -28,7 +28,7 @@ class Header extends Component {
 
     onLogOut = (e) => {
         e.preventDefault();
-        this.props.dispatch(handleSetAuthor(''))
+        this.props.setAuthor('')
     }
 
     render() {
@@ -113,4 +113,12 @@ function mapStateToProps({ author }, { location }) {
     }
 }
 
-export default withRouter(connect(mapStateToProps)(Header))
+function mapDispatchToProps(dispatch) {
+    return {
+        setAuthor: (username) => {
+            dispatch(handleSetAuthor(username))
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header))

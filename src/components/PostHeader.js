@@ -8,8 +8,7 @@ import { withRouter } from 'react-router-dom'
 
 class PostHeader extends Component {
     onDeletePost = () => {
-        const { post, dispatch } = this.props
-        dispatch(handleDeletePost(post.id))
+        this.props.deletePost(this.props.post.id)
         this.props.history.push('/')
     }
 
@@ -68,4 +67,12 @@ class PostHeader extends Component {
     }
 }
 
-export default withRouter(connect()(PostHeader))
+function mapDispatchToProps(dispatch) {
+    return {
+        deletePost: (postId) => {
+            dispatch(handleDeletePost(postId))
+        }
+    }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(PostHeader))

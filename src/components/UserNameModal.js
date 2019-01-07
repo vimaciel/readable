@@ -42,7 +42,7 @@ class UserNameModal extends Component {
 
         const { username } = this.state
 
-        this.props.dispatch(handleSetAuthor(username))
+        this.props.setAuthor(username)
 
         if (this.props.onSubmitModal !== undefined) {
             this.props.onSubmitModal(e, username)
@@ -100,5 +100,13 @@ function mapStateToProps({ author }) {
     }
 }
 
-export default connect(mapStateToProps)(UserNameModal)
+function mapDispatchToProps(dispatch) {
+    return {
+        setAuthor: (username) => {
+            dispatch(handleSetAuthor(username))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserNameModal)
 

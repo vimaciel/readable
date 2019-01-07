@@ -8,16 +8,16 @@ import PostFooter from './PostFooter'
 class Post extends Component {
 
     onPostVoting = (vote) => {
-        this.props.dispatch(handleVotingPost(this.props.post.id, vote))
+        this.props.votingPost(this.props.post.id, vote)
     }
 
-    render() {     
+    render() {
 
         const { title, author, body, voteScore } = this.props.post
 
         return (
             <div className="content-container hover-card" >
-                <PostHeader post={this.props.post} isDeleteVisible={true} isEditVisible={true}/>
+                <PostHeader post={this.props.post} isDeleteVisible={true} isEditVisible={true} />
                 <div className="columns is-mobile is-gapless">
                     <div className="column is-10" onClick={this.onClickPost}>
                         <p className="title is-4">{title}</p>
@@ -34,4 +34,12 @@ class Post extends Component {
     }
 }
 
-export default connect()(Post)
+function mapDispatchToProps(dispatch) {
+    return {
+        votingPost: (postId, vote) => {
+            dispatch(handleVotingPost(postId, vote))
+        }
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Post)
