@@ -56,7 +56,7 @@ class PostsSlider extends Component {
     }
 }
 
-function mapStateToProps({ posts, orderPosts }) {
+export function mapStateToProps({ posts, orderPosts }) {
     const { orderBy = OrderBy.newest } = orderPosts
     return {
         postIds: Object.keys(posts).sort((a, b) => {

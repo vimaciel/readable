@@ -107,18 +107,20 @@ class PostForm extends Component {
     }
 
     savePost = (username) => {
+        
         if (this.isFormValid()) {
             const { title, body, categorySelected } = this.state
             const { post } = this.props
             const isEdit = !isObjectEmpty(post)
-
+                
+            
             if (isEdit) {
                 this.props.updatePost({
                     id: post.id,
                     title: title.value,
                     body: body.value
                 })
-            } else {
+            } else {                
                 this.props.addPost({
                     title: title.value,
                     body: body.value,
@@ -156,7 +158,7 @@ class PostForm extends Component {
                     <div className="field">
                         <label className="label">Title</label>
                         <div className="control">
-                            <input type="text" className={title.valid ? 'input' : 'input is-danger'} value={title.value} onChange={this.titleOnChange} placeholder="React is awesome." />
+                            <input id="inputTitle" type="text" className={title.valid ? 'input' : 'input is-danger'} value={title.value} onChange={this.titleOnChange} placeholder="React is awesome." />
                             {!title.valid && <p className="help is-danger">Title is required</p>}
                         </div>
                     </div>
@@ -164,7 +166,7 @@ class PostForm extends Component {
                     <div className="field">
                         <label className="label">Message post</label>
                         <div className="control">
-                            <textarea className={body.valid ? 'textarea' : 'textarea is-danger'} placeholder="With Udacity's React Nanodegree I'm ready to work with React." value={body.value} onChange={this.bodyOnChange}></textarea>
+                            <textarea id="inputBody" className={body.valid ? 'textarea' : 'textarea is-danger'} placeholder="With Udacity's React Nanodegree I'm ready to work with React." value={body.value} onChange={this.bodyOnChange}></textarea>
                             {!body.valid && <p className="help is-danger">Message body is required</p>}
                         </div>
                     </div>
@@ -178,8 +180,8 @@ class PostForm extends Component {
 
                         {isEdit && (
                             <div className="level-left">
-                                <PostFooter post={post}/>
-                            </div>    
+                                <PostFooter post={post} />
+                            </div>
                         )}
 
                         <div className="level-right">
@@ -214,9 +216,9 @@ function mapDispatchToProps(dispatch) {
         updatePost: (post) => {
             dispatch(handleUpdatePost(post))
         },
-        addPost: (post) => {
+        addPost: (post) => {  
             dispatch(handleAddPost(post))
-        },
+        }
     }
 }
 

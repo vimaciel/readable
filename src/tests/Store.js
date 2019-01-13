@@ -4,7 +4,7 @@ import thunk from 'redux-thunk'
 
 export let spyDispatch
 
-const logger = (store) => (next) => (action) => {
+const logger = (store) => (next) => (action) => {  
     spyDispatch = action
 }
 

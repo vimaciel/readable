@@ -3,8 +3,8 @@ import Adapter from 'enzyme-adapter-react-16';
 
 if (global.document) {
     document.createRange = () => ({
-        setStart: () => {},
-        setEnd: () => {},
+        setStart: () => { },
+        setEnd: () => { },
         commonAncestorContainer: {
             nodeName: 'BODY',
             ownerDocument: document,
@@ -13,3 +13,11 @@ if (global.document) {
 }
 
 configure({ adapter: new Adapter() });
+
+window.matchMedia = window.matchMedia || function () {
+    return {
+        matches: false,
+        addListener: function () { },
+        removeListener: function () { }
+    };
+};

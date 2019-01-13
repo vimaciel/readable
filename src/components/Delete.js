@@ -23,7 +23,6 @@ class Delete extends PureComponent {
     onYesClick = (e) => {
         e.preventDefault()
         this.props.onYesClick(e)
-
         this.props.closeModalAfterYes && this.onCloseModal(e)
     }
 
@@ -33,7 +32,7 @@ class Delete extends PureComponent {
 
         const { deleteButtonLayout } = this.props
         let deleteButton = (
-            <button className="button is-danger is-outlined" onClick={this.onDeleteClick}>
+            <button className="button is-danger delete-button is-outlined" onClick={this.onDeleteClick}>
                 <span>Delete</span>
                 <span className="icon is-small">
                     <i className="fas fa-times"></i>
@@ -62,7 +61,7 @@ class Delete extends PureComponent {
                             <div className="card-content">
                                 <div className="field is-grouped">
                                     <div className="control">
-                                        <button onClick={this.onYesClick} className="button is-link">Yes</button>
+                                        <button onClick={this.onYesClick} className="button is-link button-yes">Yes</button>
                                     </div>
                                     <div className="control">
                                         <button onClick={this.onCloseModal} className="button">No</button>

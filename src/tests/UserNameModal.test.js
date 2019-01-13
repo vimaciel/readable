@@ -1,6 +1,6 @@
 import React from "react"
 import UserNameModal from '../components/UserNameModal'
-import { createConnectedComponent } from './helper'
+import { createConnectedComponent } from './Helper'
 import { store, spyDispatch } from "./Store"
 
 const state = {
