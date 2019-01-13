@@ -69,7 +69,7 @@ class UserNameModal extends Component {
                             <form onSubmit={this.onSubmit}>
                                 <div className="field">
                                     <div className="control has-icons-left">
-                                        <input ref={e => this.refInputUserName = e} className="input" value={this.state.username} onChange={this.onChangeUserName} type="text" placeholder="Type your name" onKeyPress={this.onConfirmUserName}></input>
+                                        <input ref={e => this.refInputUserName = e} className="input input-user-name" value={this.state.username} onChange={this.onChangeUserName} type="text" placeholder="Type your name" onKeyPress={this.onConfirmUserName}></input>
                                         <span className="icon is-small is-left">
                                             <i className="fas fa-user"></i>
                                         </span>

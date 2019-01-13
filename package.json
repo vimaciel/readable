@@ -6,15 +6,16 @@
     "bulma": "^0.7.2",
     "js-cookie": "^2.2.0",
     "mobile-detect": "^1.4.3",
-    "react": "^16.6.3",
+    "react": "^16.7.0",
     "react-contenteditable": "^3.2.4",
-    "react-dom": "^16.6.3",
+    "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.1",
     "react-slick": "^0.23.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "sinon": "^7.2.2",
     "slick-carousel": "^1.8.1",
     "uuid": "^3.3.2"
   },
@@ -34,6 +35,8 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.6.1"
+    "@fortawesome/fontawesome-free": "^5.6.1",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.7.1"
   }
 }
