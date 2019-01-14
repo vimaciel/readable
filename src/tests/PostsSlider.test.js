@@ -16,13 +16,19 @@ const state = {
     }
 }
 
+const props = {
+    location: {
+        pathname: '/'
+    }
+}
+
 describe('<PostsSlider>', () => {
     it("Test if posts is ordering by newest post", () => {
-        expect(mapStateToProps(state).postIds).toEqual(["1", "0"])
+        expect(mapStateToProps(state, props).postIds).toEqual(["1", "0"])
     })
 
     it("Test if posts is ordering by mostVoted post", () => {
         state.orderPosts.orderBy = "mostVoted"
-        expect(mapStateToProps(state).postIds).toEqual(["0", "1"])
+        expect(mapStateToProps(state, props).postIds).toEqual(["0", "1"])
     })
 })
