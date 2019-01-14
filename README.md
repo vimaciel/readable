@@ -1,5 +1,6 @@
 # Readable
 [![Build Status](https://travis-ci.org/vimaciel/my-reads.svg?branch=master)](https://travis-ci.org/vimaciel/readable)
+[![Coverage Status](https://coveralls.io/repos/github/vimaciel/readable/badge.svg?branch=master)](https://coveralls.io/github/vimaciel/readable?branch=master)
 
 by [Vinicius Furusho Maciel](https://www.linkedin.com/in/vimaciel)
 
