@@ -40,6 +40,7 @@ class Commentary extends Component {
 
     onYesClick = () => {
         this.props.deleteCommentary(this.props.commentary.id)
+        this.props.onDeleteCommentary()
     }
 
     onConfirmSaveCommentary = (e) => {

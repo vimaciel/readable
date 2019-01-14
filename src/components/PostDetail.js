@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import { handleVotingCommentary, handleGetComments } from "../actions/comments"
+import { updatePost } from "../actions/posts"
 import { connect } from 'react-redux'
 import Commentary from "./Commentary"
 import Post from './Post'
@@ -17,6 +18,18 @@ class PostDetail extends Component {
         this.props.votingCommentary(id, vote)
     }
 
+    onAddNewCommentary = () =>{
+        const post = {...this.props.post}
+        post.commentCount = post.commentCount + 1
+        this.props.updatePost(post)
+    }
+
+    onDeleteCommentary = () =>{
+        const post = {...this.props.post}
+        post.commentCount = post.commentCount - 1
+        this.props.updatePost(post)
+    }
+
     render() {
         const { post, comments, commentaryIds, username } = this.props
 
@@ -31,11 +44,11 @@ class PostDetail extends Component {
                 <div className="columns">
                     <div className={detailPostClass}>
                         <Post post={post} />
-                        <CommentaryField post={post} username={username} />
+                        <CommentaryField post={post} username={username} onAddNewCommentary={this.onAddNewCommentary} />
                     </div>
                     <div className="column">
                         {commentaryIds.map(id => (
-                            <Commentary key={id} commentary={comments[id]} onCommentaryVoting={this.onCommentaryVoting} />
+                            <Commentary key={id} commentary={comments[id]} onCommentaryVoting={this.onCommentaryVoting} onDeleteCommentary={this.onDeleteCommentary}/>
                         ))}
                     </div>
                 </div>
@@ -66,6 +79,9 @@ function mapDispatchToProps(dispatch) {
         },
         votingCommentary: (commentaryId, vote) => {
             dispatch(handleVotingCommentary(commentaryId, vote))
+        },
+        updatePost: (post) => {
+            dispatch(updatePost(post))
         }
     }
 }

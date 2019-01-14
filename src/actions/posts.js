@@ -68,7 +68,7 @@ export function handleDeletePost(id) {
 
 export function handleGetPostsByCategory(category) {
     return (dispatch) => {
-        postsApi.postsByCategory(category).then(post => {
+        postsApi.postsByCategory(category).then(post => {            
             dispatch(getPostsByCategory(post))
         })
     }

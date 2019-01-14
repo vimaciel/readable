@@ -5,10 +5,11 @@ import { Categories } from '../helpers/categoriesApi'
 import { OrderBy } from '../helpers/postsApi'
 import { handleGetPostsByCategory } from '../actions/posts'
 import { setOrderBy } from '../actions/orderPosts'
+import { withRouter } from 'react-router-dom'
 
 class PostsFilter extends Component {
     state = {
-        itemCategorySelected: Categories.all,
+        itemCategorySelected: this.props.itemCategorySelected,
         itemOrderBySelected: OrderBy.newest
     }
 
@@ -18,6 +19,8 @@ class PostsFilter extends Component {
         this.setState({
             itemCategorySelected
         })
+        
+        this.props.history.push(itemCategorySelected !== Categories.all ? `/${itemCategorySelected}` : '/')
     }
 
     onOrderBySelected = (e, itemOrderBySelected) => {
@@ -28,7 +31,7 @@ class PostsFilter extends Component {
         this.setState({
             itemOrderBySelected
         })
-    }
+    }  
 
     render() {
         const { itemOrderBySelected } = this.state
@@ -79,4 +82,11 @@ function mapDispatchToProps(dispatch) {
     }
 }
 
-export default connect(null, mapDispatchToProps)(PostsFilter)
+function mapStateToProps(_, props) {
+    const pathname = props.location.pathname.replace('/', '')
+    return {
+        itemCategorySelected: pathname === '' ? Categories.all : pathname
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PostsFilter))

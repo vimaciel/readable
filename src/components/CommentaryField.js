@@ -26,8 +26,6 @@ class CommentaryField extends Component {
 
         const { username } = this.props
 
-        console.log(username)
-
         if (username === undefined || username === '') {
             this.setState({
                 openModalUserName: true
@@ -37,6 +35,7 @@ class CommentaryField extends Component {
         }
 
         this.saveCommentary(username)
+        this.props.onAddNewCommentary()
     }
 
     saveCommentary = (username) => {
@@ -63,6 +62,7 @@ class CommentaryField extends Component {
 
     onSubmitModal = (e, username) => {
         this.saveCommentary(username)
+        this.props.onAddNewCommentary()
         this.onCloseModal(e)
     }
 

@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import ArrowSlider from './ArrowSlider'
 import PostCard from "./PostCard"
 import { OrderBy } from '../helpers/postsApi'
+import { withRouter } from "react-router-dom"
 
 class PostsSlider extends Component {
     render() {
@@ -45,6 +46,8 @@ class PostsSlider extends Component {
                 }
             ]
         };
+
+
         return (
             <Slider {...settings} className="posts-slider">
                 <NewPostCard></NewPostCard>
@@ -56,18 +59,24 @@ class PostsSlider extends Component {
     }
 }
 
-export function mapStateToProps({ posts, orderPosts }) {
+export function mapStateToProps({ posts, orderPosts }, props) {
+    const pathname = props.location.pathname.replace('/', '')
     const { orderBy = OrderBy.newest } = orderPosts
     return {
-        postIds: Object.keys(posts).sort((a, b) => {
+        postIds: Object.keys(posts).filter(key => {
+            if (pathname !== '') {
+                return posts[key].category === pathname
+            }
+
+            return true
+        }).sort((a, b) => {
             if (orderBy === OrderBy.newest) {
                 return posts[b].timestamp - posts[a].timestamp
             }
 
             return posts[b].voteScore - posts[a].voteScore
-        })
+        }),
     }
-
 }
 
-export default connect(mapStateToProps)(PostsSlider)
+export default withRouter(connect(mapStateToProps)(PostsSlider))

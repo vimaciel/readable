@@ -1,8 +1,18 @@
 import React, { Fragment } from 'react'
 import PostsSlider from './PostsSlider'
-import PostsFilter from './PostsFilter';
+import PostsFilter from './PostsFilter'
+import { withRouter } from "react-router-dom"
+import { categoryExists } from '../helpers/categoriesApi'
+import NotFound from './NotFound'
 
-const Home = () => {
+const Home = (props) => {
+    const pathname = props.location.pathname.replace('/', '')
+    const categoryFound = categoryExists(pathname)
+
+    if (!categoryFound) {
+        return <NotFound />
+    }
+
     return (
         <Fragment>
             <PostsSlider />
@@ -11,4 +21,4 @@ const Home = () => {
     )
 }
 
-export default Home
+export default withRouter(Home)
