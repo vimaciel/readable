@@ -1,8 +1,7 @@
 import React from "react"
-import { store } from './Store'
-import { createConnectedComponent } from './Helper'
-import PostHeader from '../components/PostHeader'
+import { PostHeader } from '../components/PostHeader'
 import Delete from '../components/Delete'
+import { shallow } from "enzyme"
 
 const props = {
     post: {
@@ -19,11 +18,7 @@ const props = {
     isDeleteVisible: true
 }
 
-const state = {
-
-}
-
-const wrapper = createConnectedComponent(<PostHeader {...props} />, store(state))
+const wrapper = shallow(<PostHeader {...props} />)
 
 describe('<PostHeader/>', () => {
     it('Test if delete button is visible', () => {
@@ -31,11 +26,8 @@ describe('<PostHeader/>', () => {
     })
 
     it('Test if delete button is invisible', () => {
-        const newProp = {
-            ...props,
-            isDeleteVisible: false
-        }
-        const newWrapper = createConnectedComponent(<PostHeader {...newProp} />, store(state))
+        props.isDeleteVisible = false        
+        const newWrapper = shallow(<PostHeader {...props} />)
 
         expect(newWrapper.find(Delete).exists()).toBeFalsy()
     })

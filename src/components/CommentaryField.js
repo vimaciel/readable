@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { handleAddNewCommentary } from "../actions/comments"
 import UserNameModal from './UserNameModal'
 
-class CommentaryField extends Component {
+export class CommentaryField extends Component {
     state = {
         commentary: '',
         openModalUserName: false

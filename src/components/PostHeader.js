@@ -6,7 +6,7 @@ import { handleDeletePost } from '../actions/posts'
 import { withRouter } from 'react-router-dom'
 
 
-class PostHeader extends Component {
+export class PostHeader extends Component {
     onDeletePost = () => {
         this.props.deletePost(this.props.post.id)
         this.props.history.push('/')

@@ -1,23 +1,19 @@
 import React from "react"
-import UserNameModal from '../components/UserNameModal'
-import { createConnectedComponent } from './Helper'
-import { store, spyDispatch } from "./Store"
-
-const state = {
-    author: {
-        username: 'vimaciel',
-    }
-}
+import { UserNameModal } from '../components/UserNameModal'
+import { shallow } from 'enzyme'
 
 const props = {
     onCloseModal: jest.fn(),
-    openModal: true
+    openModal: true,
+    username: 'vimaciel',
+    setAuthor: jest.fn(),
+    onSubmitModal: jest.fn()
 }
 
-const wrapper = createConnectedComponent(<UserNameModal {...props} />, store(state))
+const wrapper = shallow(<UserNameModal {...props} />)
 
 describe('<UserNameModal />', () => {
-    it("Test if input gets the value from username's store", () => {
+    it("Test if input gets the value from username props", () => {
         expect(wrapper.find('.input-user-name').props().value).toBe('vimaciel')
     })
 
@@ -27,20 +23,25 @@ describe('<UserNameModal />', () => {
 
     it('Test if modal is close', () => {
         props.openModal = false
-        const newWrapper = createConnectedComponent(<UserNameModal {...props} />, store(state))
+        const newWrapper = shallow(<UserNameModal {...props} />)
         expect(newWrapper.find('.modal.is-active').exists()).toBeFalsy()
     })
 
-    it('Test if store is updated when submit is fired with a new input', () => {
+    it('Test if submit happens with new username', () => {
         const username = 'unknown name'
 
         wrapper.find('.input-user-name').simulate('change', {
             target: {
                 value: username
             }
-        });
+        })
 
-        wrapper.find('form').simulate('submit')
-        expect(spyDispatch.username).toBe(username)
+        wrapper.find('form').simulate('submit', {
+            preventDefault: jest.fn()
+        })
+        expect(props.onSubmitModal).toHaveBeenCalled()
+        expect(props.setAuthor).toHaveBeenCalledWith(username)
     })
+
+   
 })

@@ -2,8 +2,8 @@ import React from 'react'
 import { formatTimeStamp } from "../helpers/common"
 
 const DateTimeTag = (props) => {
-
-    const {date, time} = formatTimeStamp(props.dateTime)
+    
+    const {date, time} = formatTimeStamp(props.dateTime)    
 
     return (
         <div className="tags has-addons">

@@ -6,7 +6,8 @@ describe('<Vote />', () => {
 
     const mockProps = {
         onVoting: jest.fn(),
-        voteScore: 10
+        voteScore: 10,
+        isSmallVote: true
     }
 
     it('Calls onVoting function passing upVote as parameter when up button is clicked', () => {
@@ -24,5 +25,10 @@ describe('<Vote />', () => {
         const wrapper = shallow(<Vote {...mockProps}/>)
         wrapper.find('.fa-caret-down').simulate('click')
         expect(mockProps.onVoting).toHaveBeenCalledWith('downVote')
+    })
+
+    it('Set component to be smaller', () => {
+        const wrapper = shallow(<Vote {...mockProps}/>)
+        expect(wrapper.find('.fa-2x').exists()).toBeTruthy()
     })
 })

@@ -7,7 +7,7 @@ import { handleGetPostsByCategory } from '../actions/posts'
 import { setOrderBy } from '../actions/orderPosts'
 import { withRouter } from 'react-router-dom'
 
-class PostsFilter extends Component {
+export class PostsFilter extends Component {
     state = {
         itemCategorySelected: this.props.itemCategorySelected,
         itemOrderBySelected: OrderBy.newest
@@ -43,7 +43,7 @@ class PostsFilter extends Component {
                         <p className="label-selection">Order posts by</p>
 
                         <div className="tabs is-toggle is-centered">
-                            <ul>
+                            <ul className="ulOrderBy">
                                 <li className={itemOrderBySelected === OrderBy.newest ? 'is-active' : ''} onClick={e => this.onOrderBySelected(e, OrderBy.newest)}>
                                     <a href="/">
                                         <span className="icon is-small"><i className="fas fa-calendar" aria-hidden="true"></i></span>
@@ -65,7 +65,7 @@ class PostsFilter extends Component {
                         <CategorySelecion onCategorySelect={this.onCategorySelect} itemSelected={this.state.itemCategorySelected} />
                     </div>
                 </div>
-            </div >
+            </div>
         )
     }
 }

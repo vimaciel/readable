@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleSetAuthor } from '../actions/author'
 
-class UserNameModal extends Component {
+export class UserNameModal extends Component {
     state = {
         username: this.props.username || '',
         openModal: false
