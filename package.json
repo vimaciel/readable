@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@nivo/bar": "^0.52.0",
+    "@nivo/pie": "^0.52.0",
     "bulma": "^0.7.2",
     "coveralls": "^3.0.2",
     "js-cookie": "^2.2.0",

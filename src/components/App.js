@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Header from './Header'
 import PostDetail from './PostDetail'
 import NotFound from './NotFound'
+import PostsReport from "./PostsReport"
 
 class App extends Component {
   componentDidMount() {
@@ -26,6 +27,8 @@ class App extends Component {
           <div className='container'>
             <Switch>
               <Route path="/" exact component={Home} />
+              <Route path="/posts/report" exact component={PostsReport} />
+              <Route path="/post/new" exact component={PostForm} />
               <Route path="/:category" exact component={Home} />
               <Route path="/post/new" exact component={PostForm} />
               <Route path="/post/:id/edit" exact component={PostForm} />

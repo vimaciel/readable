@@ -91,6 +91,10 @@ class Header extends Component {
                             <a href="/post/new" className={pathname === '/post/new' ? 'navbar-item  is-active' : 'navbar-item'}>
                                 New Post
                             </a>
+
+                            <a href="/posts/report" className={pathname === '/posts/report' ? 'navbar-item  is-active' : 'navbar-item'}>
+                                Posts Report
+                            </a>
                         </div>
 
                         <div className="navbar-end">

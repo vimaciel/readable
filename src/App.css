@@ -203,3 +203,10 @@ body {
   font-weight: bold;
   padding: 10px;
 }
+
+.graph-title{
+  text-align: center;
+  font-weight: bold;
+  font-size: 2em;
+  margin-top: 10%;
+}
